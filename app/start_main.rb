@@ -1,12 +1,14 @@
 require 'webrick'
 
 # 正しい相対パスを指定
-require_relative 'domain/views/base_views'
+require_relative 'domain/views/init_view'
 
 
 SERVER = WEBrick::HTTPServer.new(
     Port: 3000,
     BindAddress: '0.0.0.0'
+    #BindAddress: '127.0.0.1' # ローカルホストにバインド
+
 )
 
 

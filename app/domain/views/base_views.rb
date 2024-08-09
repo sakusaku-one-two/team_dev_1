@@ -64,6 +64,18 @@ module RootingViews
             {message: 'invoked get method!'}.to_json
         end
 
+        def DELETE(query)
+            puts 'delete api data'
+            {message: 'invoked delete method!'}.to_json
+        end
+    
+        def UPDATE(request_data_json)
+            puts 'update api data'
+            {message: 'invoked update method!'}.to_json
+        end
+
+
+
         def do_GET(req,res)
             puts 'called do_get'
             res['Content-Type'] = 'application/json'
@@ -71,14 +83,37 @@ module RootingViews
         end
 
         def do_POST(req,res)
+            begin 
+                puts req.body
+                data = JSON.parse(req.body)
+                res['Content-Type'] = 'application/json'
+                response_json = POST(data)
+                if response_json.nil? then
+                    res.body= {}.to_json
+                else
+                    res.body = response_json.to_json
+                end
+            rescue JSON::ParserError => e 
+                res.status = 400
+                res['Content-Type'] = 'application/json'
+                res.body = {error: 'Invalid JSON format'}.to_json
+            end
+        end
+
+        def do_PUT(req,res)
             data = JSON.parse(req.body)
             res['Content-Type'] = 'application/json'
-            response_json = POST(data)
-            if response_json.nil? then
-                res.body= {}.to_json
+            response_json = UPDATE(data)
+            if response_json.nil?
+                res.body = {}.to_json
             else
                 res.body = response_json.to_json
             end
+        end
+
+        def do_DELETE(req,res)
+            res['Content-Type'] = 'application/json'
+            res.body = DELETE(req.query)
         end
     end
 end

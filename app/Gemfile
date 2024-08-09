@@ -6,4 +6,5 @@ ruby '3.0.2'
 
 # webrickを追加
 gem 'webrick'
-
+gem 'activerecord', '~> 6.1'
+gem 'mysql2', '>= 0.4.4'
