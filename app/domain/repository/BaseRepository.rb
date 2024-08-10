@@ -34,7 +34,7 @@ end
 # クエリの実行例
 Client = create_mysql_client
 
-Client.query("CREATE TABLE IF NOT EXISTS samples(id INT AUTO_INCREMENT PRIMARY KEY,data TEXT)");
+# Client.query("CREATE TABLE IF NOT EXISTS samples(id INT AUTO_INCREMENT PRIMARY KEY,data TEXT)");
 
 
 module Store

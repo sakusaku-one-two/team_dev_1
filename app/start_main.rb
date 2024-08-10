@@ -12,13 +12,13 @@ SERVER = WEBrick::HTTPServer.new(
 )
 
 
-class Server < WEBrick::HTTPServlet::AbstractServlet
-    def do_GET(req,res)
-        res['Content-Type'] = "text/html"
-        return_file_path = File.join(SERVER.config[:DocumentRoot],'index.html')
-        res.body=File.read(return_file_path)
-    end
-end
+# class Server < WEBrick::HTTPServlet::AbstractServlet
+#     def do_GET(req,res)
+#         res['Content-Type'] = "text/html"
+#         return_file_path = File.join(SERVER.config[:DocumentRoot],'index.html')
+#         res.body=File.read(return_file_path)
+#     end
+# end
 
 
 #　module　views 内でBaseViewを継承したクラスを自動でルーティング

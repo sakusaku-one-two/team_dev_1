@@ -5,16 +5,36 @@ include Store
 
 module RootingViews
 
+
+
     class SampleApi < RootingViews::BaseApiView
         PATH = '/sample'
         def DELETE(query)
-            {message: 'DELETE'}.to_json
+            {
+                message: 'DELETE',
+                query: query.to_s
+            }.to_json
         end
 
+
         def GET(query)
-            puts query
-            datas = CLIENT.query('SELECT data FROM samples')
-            {message: datas.to_a}.to_json
+            
+            sql = 'SELECT content FROM cards'
+            params = []
+
+            # queryが空でない場合、WHERE句を追加
+            unless query.empty?
+                sql += " WHERE content LIKE ?"
+                params << "%#{query["serch"]}%"
+            end
+
+            # クエリを実行
+            statement = CLIENT.prepare(sql)
+            datas = statement.execute(*params)
+            {
+                message: datas.to_a,
+                query: "%#{query}%"
+            }.to_json
         end
 
         def UPDATE(request_data_json)
@@ -24,7 +44,7 @@ module RootingViews
         def POST(request_data_json)
           
             CLIENT.prepare(
-            'INSERT INTO samples(data) VALUES(?)'
+            'INSERT INTO cards(content) VALUES(?)'
             ).execute(request_data_json['text'])
             {message: 'POST'}.to_json
         end 

@@ -4,26 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     
-
+    <form id="find_form">
+        <input type="text" placeholder="検索欄" id="find">
+        <button type="button" class="styled-button" id="searchButton">検索</button>
+    </form>
     <div id="x">
-
         sample data
     </div>
 
     <form id="form" action="/submit" method="POST">
-        <textarea id="text" name="text" rows="4" cols="50" placeholder="type your text here .." >
-        </textarea>
-        <button type="submit">submit</button>
+        <textarea id="text" name="text" rows="4" cols="50" placeholder="type your text here .."></textarea>
+        <button type="submit" class="styled-button" id="submitButton">submit</button>
     </form>
 
+    <button id="fetchButton" type="menu" class="styled-button">Fetch</button>
+    <button id="sampleGet" type="reset" class="styled-button">Reset</button>
+    <button id="fetchButtonWithQuery" type="button" class="styled-button">Fetch with Query Params</button>
 
-    <button id="fetchButton"></button>
-    <button id="sampleGet"></button>
-
-    <script src="/js/main.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

@@ -24,8 +24,15 @@ module RootingViews
             end
         end
 
-        
-       
+        def querys(req)
+            query = req.query
+            return {} if query.empty?
+            new_query = query.map { |key,value|
+
+                [key.gsub('\\','') , value.gsub('\\','')]
+        }.to_h
+
+        end
 
     end
 
@@ -51,6 +58,12 @@ module RootingViews
 
     end
 
+
+
+
+
+
+
     class BaseApiView < BaseView
         PATH = '/api'
 
@@ -69,7 +82,7 @@ module RootingViews
             {message: 'invoked delete method!'}.to_json
         end
     
-        def UPDATE(request_data_json)
+        def UPDATE(query,request_data_json)
             puts 'update api data'
             {message: 'invoked update method!'}.to_json
         end
@@ -79,7 +92,7 @@ module RootingViews
         def do_GET(req,res)
             puts 'called do_get'
             res['Content-Type'] = 'application/json'
-            res.body = GET(req.query)
+            res.body = GET(querys(req))
         end
 
         def do_POST(req,res)
@@ -103,7 +116,7 @@ module RootingViews
         def do_PUT(req,res)
             data = JSON.parse(req.body)
             res['Content-Type'] = 'application/json'
-            response_json = UPDATE(data)
+            response_json = UPDATE(querys(req), data)
             if response_json.nil?
                 res.body = {}.to_json
             else
@@ -113,7 +126,7 @@ module RootingViews
 
         def do_DELETE(req,res)
             res['Content-Type'] = 'application/json'
-            res.body = DELETE(req.query)
+            res.body = DELETE(querys(req))
         end
     end
 end

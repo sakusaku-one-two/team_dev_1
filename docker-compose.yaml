@@ -17,10 +17,12 @@ services:
 
     volumes:
       # - db_data:/var/lib/mysql 
-      - ./app/domain/repository/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./app/domain/repository/my.conf:/etc/mysql/conf.d/my.cnf
+      - ./app/domain/repository/init.sql:/docker-entrypoint-initdb.d/init.sql
+      
     restart: always #コンテナが停止したら自動的に再起動
     healthcheck:
-      test: ["CMD", "mysqladmin","ping","-h","localhost"]
+      test: ["CMD", "mysqladmin","ping","-h","127.0.0.1", "-proot_password"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -60,5 +62,3 @@ services:
     restart: always #コンテナが停止した場合に自動的の再起動
 
 
-volumes:
-  db_data:

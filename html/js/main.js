@@ -71,3 +71,36 @@ document.getElementById('form').addEventListener('submit',(event) =>{
         console.log('error' ,e);
     });
 });
+
+document.getElementById('searchButton').addEventListener('click',(event) =>{
+
+    const inputValue = document.getElementById('find').value;
+    alert (inputValue);
+    const queryParams = new URLSearchParams({
+        serch: inputValue
+    });
+    fetch(`api/sample?${queryParams}`,{
+        method: 'GET',
+        headers: {
+            'Content-Type':'application/json'
+        }
+        
+    })
+    .then(response => {
+        if (!response.ok){
+            throw new Error('取得できませんでした');
+        }
+        return response.json();
+    })
+    .then(data => {
+        
+        const targetDom = document.getElementById('x');
+        targetDom.innerText = JSON.stringify(data,null,2);
+
+    })
+    .catch(erorr => {
+        alert(erorr.body);
+    });
+
+
+});

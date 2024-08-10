@@ -1,0 +1,10 @@
+CREATE DATABASE IF NOT EXISTS team_dev_db;
+USE team_dev_db;
+
+CREATE TABLE  IF NOT EXISTS cards(id INT AUTO_INCREMENT PRIMARY KEY,content TEXT);
+
+
+INSERT INTO cards(content) VALUES('FIRST DATA');
+
+
+
