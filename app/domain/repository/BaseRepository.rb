@@ -1,13 +1,7 @@
 require 'mysql2'
 
 
-# # MySQLクライアントの設定
-# Client = Mysql2::Client.new(
-#   host: 'db', # Docker Composeで定義されたサービス名
-#   username: 'team_user',
-#   password: 'user_password',
-#   database: 'team_dev_db'
-# )
+
 
 def create_mysql_client
     retries = 5

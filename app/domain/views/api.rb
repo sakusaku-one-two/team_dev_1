@@ -8,7 +8,10 @@ module RootingViews
 
 
     class SampleApi < RootingViews::BaseApiView
-        PATH = '/sample'
+        PATH = '/sample' #　api/sampleで呼び出せます。
+
+
+
         def DELETE(query)
             {
                 message: 'DELETE',
@@ -16,6 +19,7 @@ module RootingViews
             }.to_json
         end
 
+        
 
         def GET(query)
             
@@ -37,9 +41,13 @@ module RootingViews
             }.to_json
         end
 
+
+
         def UPDATE(request_data_json)
             {message: 'UPDATE'}.to_json
         end
+
+
 
         def POST(request_data_json)
           

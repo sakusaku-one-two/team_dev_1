@@ -39,7 +39,7 @@ module RootingViews
 
     class RootView  < BaseView
 
-        PATH = '/'
+        PATH = '/RootView'
 
         def set_value_for_html(target_html_path,locals={})
             template_html_file = File.read(target_html_path)
