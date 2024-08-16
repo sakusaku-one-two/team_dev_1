@@ -1,13 +1,11 @@
-require_relative 'base_views'
-require_relative '../repository/BaseRepository'
+require_relative 'base_endpoint'
 
-include Store
 
-module RootingViews
+module AutoRooting
 
 
 
-    class SampleApi < RootingViews::BaseApiView
+    class SampleApi < BaseApi
         PATH = '/sample' #　api/sampleで呼び出せます。
 
 

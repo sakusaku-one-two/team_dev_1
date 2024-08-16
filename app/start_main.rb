@@ -1,7 +1,7 @@
 require 'webrick'
 
 # 正しい相対パスを指定
-require_relative 'domain/views/init_view'
+require_relative 'domain/endpoints/init_all_endpoints'
 
 
 SERVER = WEBrick::HTTPServer.new(
@@ -24,7 +24,7 @@ SERVER = WEBrick::HTTPServer.new(
 #　module　views 内でBaseViewを継承したクラスを自動でルーティング
 def init()
     ObjectSpace.each_object(Class) do |klass|
-        if klass < RootingViews::BaseView && klass.name.start_with?(RootingViews.to_s)
+        if klass < AutoRooting::BaseEndPoint && klass.name.start_with?(AutoRooting.to_s)
             SERVER.mount(klass.my_path,klass)
             puts klass.my_path
         end

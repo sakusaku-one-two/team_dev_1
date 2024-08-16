@@ -2,11 +2,14 @@ require 'webrick'
 require 'erb'
 require 'json'
 
+require_relative '../repository/BaseRepository'
 
-module RootingViews
+include Store
 
-    class BaseView < WEBrick::HTTPServlet::AbstractServlet
+module AutoRooting
 
+    class BaseEndPoint < WEBrick::HTTPServlet::AbstractServlet
+        SQL = CLIENT
         PATH = nil
 
         def do_OPTIONS(req,res)
@@ -37,7 +40,7 @@ module RootingViews
     end
 
 
-    class RootView  < BaseView
+    class RootEndPoint  < BaseEndPoint
 
         PATH = '/RootView'
 
@@ -64,7 +67,7 @@ module RootingViews
 
 
 
-    class BaseApiView < BaseView
+    class BaseApi < BaseEndPoint
         PATH = '/api'
 
         def POST(request_data_json)

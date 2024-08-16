@@ -1,3 +1,16 @@
+const createCards = (contentList) => {
+    contentList.forEach(element => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        
+        const cardContent = document.createElement('p');
+        cardContent.innerText = element.content;
+        card.appendChild(cardContent);
+
+        const cardContainer = document.getElementById('x');
+        cardContainer.appendChild(card);
+    });
+}
 
 function callApi() {
     fetch('https://127.0.0.1:8443/api/api',{
@@ -15,7 +28,9 @@ function callApi() {
     })
     .then(data => {
         const targetDom = document.getElementById('x');
-        targetDom.innerText = JSON.stringify(data,null,2);
+        createCards(
+            data.message
+        )
         
     })
     .catch(error => {
@@ -39,7 +54,8 @@ const getApi = () => {
     })
     .then(data =>{
         const targetDom = document.getElementById('x');
-        targetDom.innerText = JSON.stringify(data,null,2);
+        targetDom.innerText = '';
+        createCards(data.message);
     })
     .catch(error => {
         alert(error);
@@ -95,7 +111,8 @@ document.getElementById('searchButton').addEventListener('click',(event) =>{
     .then(data => {
         
         const targetDom = document.getElementById('x');
-        targetDom.innerText = JSON.stringify(data,null,2);
+        targetDom.innerText = '';
+        createCards(data.message);
 
     })
     .catch(erorr => {
