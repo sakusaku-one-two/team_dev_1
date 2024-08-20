@@ -31,7 +31,7 @@ module AutoRooting
             end
 
             # クエリを実行
-            statement = CLIENT.prepare(sql)
+            statement = self.SQL.prepare(sql)
             datas = statement.execute(*params)
             {
                 message: datas.to_a,
@@ -49,7 +49,7 @@ module AutoRooting
 
         def POST(request_data_json)
           
-            CLIENT.prepare(
+            self.SQL.prepare(
             'INSERT INTO cards(content) VALUES(?)'
             ).execute(request_data_json['text'])
             {message: 'POST'}.to_json
