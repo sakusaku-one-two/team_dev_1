@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS Tasks (
     task_id BIGINT(20) AUTO_INCREMENT PRIMARY KEY,
     task_name VARCHAR(100) NOT NULL,
     priority INT NOT NULL DEFAULT 0,
+    status INT NOT NULL DEFAULT 0,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
@@ -16,7 +17,7 @@ CREATE TABLE IF NOT EXISTS Tasks (
 CREATE TABLE IF NOT EXISTS Reminders (
     reminder_id BIGINT(20) AUTO_INCREMENT PRIMARY KEY,
     task_id BIGINT(20) NOT NULL,
-    reminder_date DATETIME NOT NULL,
+    reminder_date DATETIME,
     forgetting_rate FLOAT NOT NULL DEFAULT 0,
     status VARCHAR(50) NOT NULL DEFAULT '未完了',
     round_count INT NOT NULL DEFAULT 0,
@@ -36,9 +37,9 @@ CREATE TABLE IF NOT EXISTS ReminderSettings (
 CREATE TABLE IF NOT EXISTS Notifications (
     notification_id BIGINT(20) AUTO_INCREMENT PRIMARY KEY,
     reminder_id BIGINT(20) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    subject VARCHAR(100) NOT NULL,
-    body TEXT NOT NULL,
+    email VARCHAR(100),
+    subject VARCHAR(100),
+    body TEXT,
     sent_at DATETIME,
     notification_time TIME NOT NULL DEFAULT '05:00',
     FOREIGN KEY reminder_id REFERENCES Reminders(reminder_id)
