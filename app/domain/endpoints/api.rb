@@ -6,37 +6,44 @@ module AutoRooting
 
 
     class SampleApi < BaseApi
-        PATH = '/sample' #　api/sampleで呼び出せます。
+        PATH = '/sample' #　api/sampleで呼び出せます.
 
 
 
-        def DELETE(query)
+        def DELETE(request_data_json)
             {
                 message: 'DELETE',
-                query: query.to_s
+                query: request_data_json.to_s
             }.to_json
         end
 
         
 
-        def GET(query)
-            
+        def GET(query_params)
+            puts query_params.to_s
             sql = 'SELECT content FROM cards'
             params = []
-
-            # queryが空でない場合、WHERE句を追加
-            unless query.empty?
-                sql += " WHERE content LIKE ?"
-                params << "%#{query["serch"]}%"
-            end
-
-            # クエリを実行
-            statement = self.SQL.prepare(sql)
-            datas = statement.execute(*params)
-            {
-                message: datas.to_a,
-                query: "%#{query}%"
+            begin
+                # queryが空でない場合、WHERE句を追加
+                unless query_params.empty?
+                    sql += " WHERE content LIKE ?"
+                    params << "%#{query_params["search"]}%"
+                    statement = self.class::SQL.prepare(sql)
+                    datas = statement.query(*params)
+                   
+                else
+                    datas = self.class::SQL.query(sql)
+                end
+                # クエリを実行
+            rescue => e 
+                return {
+                    message: e.message
             }.to_json
+            end    
+            return  {
+                    message: datas.to_a,
+                    query: "%#{query_params["search"]}%"
+                }.to_json
         end
 
 
@@ -49,7 +56,7 @@ module AutoRooting
 
         def POST(request_data_json)
           
-            self.SQL.prepare(
+            self.class::SQL.prepare(
             'INSERT INTO cards(content) VALUES(?)'
             ).execute(request_data_json['text'])
             {message: 'POST'}.to_json
@@ -57,6 +64,3 @@ module AutoRooting
     end
 
 end 
-
-
-

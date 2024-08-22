@@ -31,7 +31,7 @@ module AutoRooting
             query = req.query
             return {} if query.empty?
             new_query = query.map { |key,value|
-
+                puts key,value
                 [key.gsub('\\','') , value.gsub('\\','')]
         }.to_h
 
@@ -75,17 +75,17 @@ module AutoRooting
             {message: 'ポストされました。'}
         end
 
-        def GET(query)
+        def GET(query_params)
             puts 'get api data'
             {message: 'invoked get method!'}.to_json
         end
 
-        def DELETE(query)
+        def DELETE(query_params)
             puts 'delete api data'
             {message: 'invoked delete method!'}.to_json
         end
     
-        def UPDATE(query,request_data_json)
+        def UPDATE(request_data_json)
             puts 'update api data'
             {message: 'invoked update method!'}.to_json
         end
@@ -107,7 +107,7 @@ module AutoRooting
                 if response_json.nil? then
                     res.body= {}.to_json
                 else
-                    res.body = response_json.to_json
+                    res.body = response_json
                 end
             rescue JSON::ParserError => e 
                 res.status = 400
@@ -119,11 +119,11 @@ module AutoRooting
         def do_PUT(req,res)
             data = JSON.parse(req.body)
             res['Content-Type'] = 'application/json'
-            response_json = UPDATE(querys(req), data)
+            response_json = UPDATE(data)
             if response_json.nil?
                 res.body = {}.to_json
             else
-                res.body = response_json.to_json
+                res.body = response_json
             end
         end
 
