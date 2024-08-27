@@ -1,7 +1,10 @@
-
+import sample from "./apis/api.js";
+import setTimeOfDayImage from "./timeManage/setDayImage.js";
 
 
 document.addEventListener("DOMContentLoaded",function(){
+    setTimeOfDayImage();
+    
     const todoForm = document.getElementById('todo-form');
     const todoList = document.querySelector('.todo-List');
     const timelineItems = document.querySelector('.timeLine-items');
@@ -14,8 +17,8 @@ document.addEventListener("DOMContentLoaded",function(){
         const reminderTime = document.getElementById('reminder-time').value;
 
 
-        addTodoItem(title,priority,reminderTime);
-        
+        sample(title);
+
     });
 
 
