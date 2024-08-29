@@ -1,6 +1,7 @@
+const isinRange =(min,max,value) =>  min <= value && value <= max;
 
 function whatTimeRange() {
-    const isinRange =(min,max,value) =>  min <= value && value <= max;
+    
     const now_time = new Date().getHours();
 
     if (isinRange(4,7,now_time)) return 'images/sunrise.png'; //４時から７時の間なら朝日を表示
@@ -13,12 +14,14 @@ function whatTimeRange() {
 }  
 
 
+
+
 export default function setTimeOfDayImage(){
     const imageElement = document.getElementById('day-image');
     if (imageElement) {
         imageElement.src = whatTimeRange(); //画像のsrcを時刻に合わせて取得
     }
-
+    alert('画像をセットしました。')
 
 }
 
