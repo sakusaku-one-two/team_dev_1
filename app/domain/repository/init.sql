@@ -39,9 +39,9 @@ INSERT INTO Tasks(title, priority, status) VALUES('Fourth Task', 3, 1);
 
 -- Remindersテーブルに追加のサンプルデータを挿入
 -- ここでは、Tasksテーブルのidを参照しています。idが2と3のタスクに対するリマインダーを追加します。
-INSERT INTO Reminders(task_id, reminder_date, status_description, status) VALUES(2, "2024/09/15", '未完了', 0);
-INSERT INTO Reminders(task_id, reminder_date, status_description, status) VALUES(3, "2024/10/10", '完了', 1);
-INSERT INTO Reminders(task_id, reminder_date, status_description, status) VALUES(2, "2024/12/20", '未完了', 0);
+INSERT INTO Reminders(task_id, reminder_date, status_description, status) VALUES(2, "2024-09-15", '未完了', 0);
+INSERT INTO Reminders(task_id, reminder_date, status_description, status) VALUES(3, "2024-10-10", '完了', 1);
+INSERT INTO Reminders(task_id, reminder_date, status_description, status) VALUES(2, "2024-12-20", '未完了', 0);
 
 
 

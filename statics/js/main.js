@@ -9,6 +9,10 @@ import GetTasks from "./apis/getTasks.js";
 document.addEventListener("DOMContentLoaded",function(){
     void setTimeOfDayImage();//時間帯ごとに画像を変える関数
     const response  = GetTasks();//dbから全タスクを取得
+    
+    response.then(data =>{
+        alert(data);
+    })
 
     const todoForm = document.getElementById('todo-form');
     const todoList = document.querySelector('.todo-List');
