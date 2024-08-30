@@ -11,7 +11,10 @@ document.addEventListener("DOMContentLoaded",function(){
     const response  = GetTasks();//dbから全タスクを取得
     
     response.then(data =>{
-        alert(data);
+        alert(
+            JSON.stringify(data)
+        );
+
     })
 
     const todoForm = document.getElementById('todo-form');
