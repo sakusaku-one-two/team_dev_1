@@ -16,7 +16,12 @@ document.addEventListener("DOMContentLoaded",async function(){
     
     const todoList = document.querySelector('.todo-List');
     
-    const result = await GetTasks((allTasks)=>{
+    GetTasks((allTasks)=>{
+        console.log("all tasks get");
+        if (!Array.isArray(allTasks)){
+            console.log(allTasks);
+            return ;
+        }
         allTasks.map(task =>{
             const taskItem = CreateTodoDom(task);
             const todoList = document.querySelector('.todo-list');

@@ -33,7 +33,6 @@ export default function setTimeOfDayImage(){
     if (imageElement) {
         imageElement.src = whatTimeRange(); //画像のsrcを時刻に合わせて取得
     }
-    alert('画像をセットしました。')
 
 }
 

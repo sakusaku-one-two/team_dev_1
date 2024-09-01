@@ -13,6 +13,8 @@ const getPrevAndNext = (reminders) => {
 
 };
 
+
+//todoを引数にDOMとしてのTODOを新しく作成する。
 export default function CreateTodoDom( todo ){
     
     const {id,priority,reminders,title} = todo;
@@ -44,7 +46,7 @@ export default function CreateTodoDom( todo ){
     const editButton = todoItem.querySelector('.edit-button');
     editButton.addEventListener('click',() =>{
         document.getElementById('title').value = title;
-        document.getElementById('prioryty').value = priority;
+        document.getElementById('priority').value = priority;
         document.getElementById('reminder-time').value = reminders.length;
     });
     

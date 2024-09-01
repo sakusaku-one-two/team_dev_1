@@ -44,22 +44,23 @@ module Store
         end
 
         def execute()
+            client = create_mysql_client #同じデータベース接続を複数のFiber(軽量スレッド)で同時に使用しようとするとエラーがでるので都度コネクションを貼り直す。
             retries = 3
             results = nil
             begin
-                $client.query('START TRANSACTION')
+                client.query('START TRANSACTION')
                 if @params.nil?
-                    results = $client.query(@query)
+                    results = client.query(@query)
                 else
-                    statement = $client.prepare(@query)
+                    statement = client.prepare(@query)
                     results = statement.execute(*@params)
                 end
-                $client.query('COMMIT')
+                client.query('COMMIT')
             rescue Mysql2::Error => e
-                $client.query('ROLLBACK') 
+                client.query('ROLLBACK') 
                 if (retries -= 1) > 0
                     puts '再接続を試みます'
-                    $client = create_mysql_client
+                    client = create_mysql_client
                     retry
                 else
                     raise e

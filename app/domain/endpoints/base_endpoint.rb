@@ -70,7 +70,7 @@ module AutoRooting
 
 
     class BaseApi < BaseEndPoint
-        PATH = '/api'
+        PATH = '/'
 
         def POST(request_data_json)
             puts request_data_json
