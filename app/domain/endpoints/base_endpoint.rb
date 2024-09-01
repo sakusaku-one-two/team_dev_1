@@ -8,10 +8,12 @@ include Store
 
 module AutoRooting
 
+    DataQuery = Store::DbQuery
+    
     class BaseEndPoint < WEBrick::HTTPServlet::AbstractServlet
-        SQL = CLIENT
+        SQL = $client
         PATH = nil
-
+        
         def do_OPTIONS(req,res)
             res['Access-Control-Allow-Origin'] ='*' #許可するオリジンを指定してください。
             res['Access-Control-Allow-Methods'] = "GET,POST,OPTIONS"

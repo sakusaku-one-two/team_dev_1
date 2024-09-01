@@ -1,8 +1,8 @@
 // すべてのタスクを取得する
-const GetTasks = async () => {
+const GetTasks = async (call_back) => {
     
-    try {
-        const response = await fetch('api/tasks', {
+    try {    
+        const response = await fetch('/api/tasks', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -14,12 +14,18 @@ const GetTasks = async () => {
             console.error('Response error:', await response.text());
             throw new Error('タスクの取得に失敗しました。');
         }
+        
+        const tasks =  await response.json();
+        
+        call_back(tasks);
 
-        return await response.json();
     } catch(error) {
-        console.error('Fetch error:', error);
-        return error;
+        
+        alert(error);
+
     }
+
+        
 };
 
 export default GetTasks;

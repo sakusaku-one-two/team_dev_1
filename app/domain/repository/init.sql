@@ -43,12 +43,52 @@ INSERT INTO Reminders(task_id, reminder_date, status_description, status) VALUES
 INSERT INTO Reminders(task_id, reminder_date, status_description, status) VALUES(3, "2024-10-10", '完了', 1);
 INSERT INTO Reminders(task_id, reminder_date, status_description, status) VALUES(2, "2024-12-20", '未完了', 0);
 
+CREATE VIEW fetch_tasks_json AS
+     SELECT JSON_OBJECT(
+        'id',Tasks.id,
+        'title',Tasks.title,
+        'priority',Tasks.priority,
+        'status',Tasks.status,
+        'created_at',Tasks.created_at,
+        'updated_at',Tasks.updated_at,
+        'reminders',(
+            SELECT JSON_ARRAYAGG(
+                JSON_OBJECT(
+                    'id',Reminders.id,
+                    'task_id',Reminders.task_id,
+                    'reminder_date',Reminders.reminder_date,
+                    'status_description',Reminders.status_description,
+                    'status',Reminders.status
+                )
+            )
+            FROM Reminders
+            WHERE Reminders.task_id = Tasks.id
+        )
+    ) AS task_details
+    FROM Tasks;
+
+
+CREATE VIEW tree_count AS 
+    SELECT
+        (SUM(CASE WHEN status !=0 THEN 1 ELSE 0 END) / COUNT(*)) * 10.0 AS tree_count 
+    FROM Tasks;
+
 
 
 DELIMITER //
 
 CREATE PROCEDURE GetTasks()
 BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- エラーが発生した場合にロールバック
+        ROLLBACK;
+    END;
+
+    -- トランザクションの開始
+    START TRANSACTION;
+
+    -- メインのクエリ
     SELECT JSON_OBJECT(
         'id',Tasks.id,
         'title',Tasks.title,
@@ -71,5 +111,9 @@ BEGIN
         )
     ) AS task_details
     FROM Tasks;
+
+    -- トランザクションのコミット
+    COMMIT;
 END //
+
 DELIMITER ;

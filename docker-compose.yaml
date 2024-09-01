@@ -10,6 +10,7 @@ services:
       MYSQL_DATABASE: team_dev_db
       MYSQL_USER: team_user
       MYSQL_PASSWORD: user_password
+      MYSQL_INITDB_SKIP_TZINFO: 1
     # ports:
     #   - "127.0.0.1:3306:3306" #ポートフォアディングをローカルホスト内に指定。
     expose:
@@ -31,7 +32,7 @@ services:
   api:
     build: 
       context: ./app
-      dockerfile: dockerfile.yaml
+      dockerfile: Dockerfile
     container_name: api
     volumes: 
       - ./app:/app
