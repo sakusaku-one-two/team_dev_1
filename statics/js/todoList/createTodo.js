@@ -1,3 +1,6 @@
+import setTree from "../three/tree.js";
+
+
 const getPrevAndNext = (reminders) => {
     if (reminders === null || reminders.length === 0) return {prevDate: '',nextDate:''};
     
@@ -32,7 +35,7 @@ export default function CreateTodoDom( todo ){
     const todoText = `
         <div class="todo-text">
             <span>${title}</span>
-            <span>${todo.status}</span>
+            <span id="${id}_status">${todo.status}</span>
             <span>${priorityStars + blankStars}</span>
         </div>
         <div class="todo-actions">
@@ -56,7 +59,7 @@ export default function CreateTodoDom( todo ){
 
     const doneButton = todoItem.querySelector('.check-button');
     doneButton.addEventListener('click',() =>{
-        alert(id);
+        
         fetch(`/api/task_checked`,{
             method:'PUT',
             headers:{
@@ -67,14 +70,17 @@ export default function CreateTodoDom( todo ){
             const result = res.json();
             if (!res.ok || !result.success ){
 
-                alert(result.error)
+                console.log(result.error);
             
             }
             return result;
         }).then(data => {
-            alert(`${data.error}を終了状態に更新しました。`);
+           
+            const status_dom = document.getElementById(`${id}_status`);
+            status_dom.innerText = 1;
+            setTree();
         }).catch(error =>{
-            alert(error.message)
+            console.log(error.message);
         }) 
     });
     

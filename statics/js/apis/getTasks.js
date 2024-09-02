@@ -15,13 +15,11 @@ const GetTasks = (call_back) => {
         }).then(data => {
             call_back(data)
         }).catch(error => {
-            alert(error.message);
+            console.log(error);
         });
        
     } catch(error) {
-        
-        alert(error);
-
+        console.log(error);
     }   
 };
 
