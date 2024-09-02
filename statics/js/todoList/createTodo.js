@@ -56,6 +56,7 @@ export default function CreateTodoDom( todo ){
 
     const doneButton = todoItem.querySelector('.check-button');
     doneButton.addEventListener('click',() =>{
+        alert(id);
         fetch(`/api/task_checked`,{
             method:'PUT',
             headers:{
@@ -63,13 +64,15 @@ export default function CreateTodoDom( todo ){
             },
             body:JSON.stringify({id:id})
         }).then(res => {
-            if (!res.ok){
+            const result = res.json();
+            if (!res.ok || !result.success ){
 
+                alert(result.error)
             
             }
-            return res.json();
+            return result;
         }).then(data => {
-            alert(`${data.message}を終了状態に更新しました。`);
+            alert(`${data.error}を終了状態に更新しました。`);
         }).catch(error =>{
             alert(error.message)
         }) 
