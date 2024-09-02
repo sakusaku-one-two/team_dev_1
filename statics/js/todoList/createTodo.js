@@ -14,6 +14,7 @@ const getPrevAndNext = (reminders) => {
 };
 
 
+
 //todoを引数にDOMとしてのTODOを新しく作成する。
 export default function CreateTodoDom( todo ){
     
@@ -31,6 +32,7 @@ export default function CreateTodoDom( todo ){
     const todoText = `
         <div class="todo-text">
             <span>${title}</span>
+            <span>${todo.status}</span>
             <span>${priorityStars + blankStars}</span>
         </div>
         <div class="todo-actions">
@@ -48,6 +50,29 @@ export default function CreateTodoDom( todo ){
         document.getElementById('title').value = title;
         document.getElementById('priority').value = priority;
         document.getElementById('reminder-time').value = reminders.length;
+    });
+
+
+
+    const doneButton = todoItem.querySelector('.check-button');
+    doneButton.addEventListener('click',() =>{
+        fetch(`/api/task_checked`,{
+            method:'PUT',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({id:id})
+        }).then(res => {
+            if (!res.ok){
+
+            
+            }
+            return res.json();
+        }).then(data => {
+            alert(`${data.message}を終了状態に更新しました。`);
+        }).catch(error =>{
+            alert(error.message)
+        }) 
     });
     
     

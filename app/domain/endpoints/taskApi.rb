@@ -23,16 +23,29 @@ module AutoRooting
     end
 
 
+    class GetTasks < BaseApi
+        PATH = "/get_tasks"
+
+        def GET(query_params)
+            
+        end
+    end
+
     class TaskUpdate < BaseApi #　タスクの内容を更新するAPI 
         PATH = '/task_update'
 
         def UPDATE(request_data_json)
             begin
+
                 id = request_data_json[:id]
                 title = request_data_json[:title]
                 description = request_data_json[:description]
                 status = request_data_json[:status]
-                DataQuery.new("UPDATE Tasks SET title = ?,description = ?,status = ? WHERE id = ?",[title,description,status,id]).execute
+
+                sql = "UPDATE Tasks SET title = ?,description = ?,status = ? WHERE id = ?"
+                params_array = [title,description,status,id]
+
+                DataQuery.new(sql,params_array).execute
                 return {success:true,id:id}.to_json
             rescue StandardError => e 
                 return {
@@ -51,7 +64,7 @@ module AutoRooting
                 DataQuery.new('UPDATE Tasks SET status=1 WHERE id=? VALUES(?)',[id]).execute
                 return {success:true,id:id}.to_json
             rescue Error => e
-                return {success: false,error:e.message}.to_json
+                return {success: false,error:e.message,id:id}.to_json
             end
         end
     end
@@ -61,7 +74,7 @@ module AutoRooting
         PATH = '/count'
 
         def GET(query_params)
-            sql = "SELECT * FROM tree_count"
+            sql = "SELECT * FROM tree_count" #VEIWとしてinit.sqlに定義済み
             count = DataQuery.new(sql).execute.first['tree_count'].to_i
             {count: count}.to_json
         end
