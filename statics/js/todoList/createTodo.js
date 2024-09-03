@@ -25,21 +25,31 @@ export default function CreateTodoDom( todo ){
     todoItem.className = 'todo-item';
     todoItem.id = id;
 
-    const priorityStars = Array(priority).fill('<img src="images/icon/star_1.png" alt="star" class="icon icon-star">').join('');
-    const blankStars = priority < 5 ?  Array(5 - priority).fill('<img src="images/icon/star_0.png" alt="blackStar" class="icon icon-star">').join('') : '' ;
+    const priorityStars = Array(priority).fill('<img src="images/icon/star_1.png" alt="star" class="todo-icon icon-star">').join('');
+    const blankStars = priority < 5 ?  Array(5 - priority).fill('<img src="images/icon/star_0.png" alt="blackStar" class="todo-icon icon-star">').join('') : '' ;
 
 
     const todoText = `
         <div class="todo-text">
-            <span>${title}</span>
-            <span>${todo.status}</span>
-            <span>${priorityStars + blankStars}</span>
+            <div class="todo-text-child todo-star">
+                <span>${priorityStars + blankStars}</span>
+                <span>${todo.status}</span>
+            </div>
+            <div class="todo-text-child todo-title">
+                <span>${title}</span>
+            </div>
         </div>
         <div class="todo-actions">
-            <span>PREV ${prevDate}</span>
-            <span>NEXT ${nextDate}</span>
-            <button class="edit-button"><img src="images/icon/edit.png" alt="Edit" class="icon icon-edit"></button>
-            <button class="check-button" ><img src="images/icon/check_box.png" alt="Check" class="icon icon-check"></button>
+            <div class="todo-action">
+                <p>PREV</p>
+                <span>${prevDate}</span>
+            </div>
+            <div class="todo-action">
+                <p>NEXT</p>
+                <span>${nextDate}</span>
+            </div>
+            <button class="edit-button"><img src="images/icon/edit.png" alt="Edit" class="todo-icon icon-edit"></button>
+            <button class="check-button" ><img src="images/icon/check_box.png" alt="Check" class="todo-icon icon-check"></button>
         </div>
     `;
 

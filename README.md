@@ -2,8 +2,9 @@
 
 
 ドッカーを立ち上げる方法
+
 ```
-docker-compose build
+docker-compose build --no-cache
 ```
 
 ```
