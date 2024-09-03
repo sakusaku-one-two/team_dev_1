@@ -9,54 +9,103 @@
 <body>
     <div class="container">
         <header>
-            <h1>ToDo</h1>
+            <h1 class="header-logo">ToDo</h1>
             <div class="header-right">
-                <div class="date">
-                    <sapn id="day-time"></sapn>
-                    <img id="day-image" src="" alt="Tree">
+                <div class="header-icon">
+                    <div class="icon-settings icon-space">
+                        <a href="#"> <!-- #の部分は設定画面のリンクに書き直す -->
+                            <img class="icon" src="/images/icon/settings.png">
+                        </a>
+                    </div>
+                    <div class="icon-clock icon-space">
+                        <img class="icon" src="images/icon/clock.png">
+                    </div>
                 </div>
-                <div class="settings">
-                    <i class="icon-settings"></i>
-                    <i class="icon-clock"></i>
-                    <i class="icon-sun"></i>
+                <div class="time-text">
+                    <sapn id="day-time"></sapn>
+                </div>
+                <div class="icon-time icon-space">
+                    <img class="icon" id="day-image" src="" alt="Tree">
                 </div>
             </div>
         </header>
         <main>
             <aside>
                 <div class="search-bar">
-                    <input type="text" placeholder="Search...">
-                    <button class="search-button"><i class="icon-search"></i></button>
-                    <button class="sort-button">SORT</button>
+                    <input class="text-box search-box" type="text" placeholder="Search...">
+                    <div class="search-btn-container icon-space">
+                        <a href="#"> <!-- JSを使用する検索ボタン。search-boxの入力を受け取り、検索ボタンを押したら検索結果を表示する。 -->
+                            <img class="icon icon-search" src="images/icon/search.png">
+                        </a>
+                    </div>
+                    <a href="#"> <!-- JSを使用するsortボタン。sortボタンを押したらtodoリストをsortする。 -->
+                        <img class="sort-btn" src="/images/icon/sort_btn.png" alt="sort"> <!-- 画像の保存場所のパスに書き直す -->
+                    </a>
                 </div>
                 <div class="todo-list">
                     <!-- ToDo items will be dynamically added here -->
                 </div>
             </aside>
-            <section class="details">
-                <div class="image-container">
-                    <img id="tree" src="" alt="Tree">
-                </div>
-                <form id="todo-form">
-                    <input type="text" id="title" placeholder="Title">
-                    <input type="text" id="priority" placeholder="Priority">
-                    <input type="text" id="reminder-time" placeholder="Reminder time">
-                    <div class="priority-buttons">
-                        <button type="button" class="priority-button">1</button>
-                        <button type="button" class="priority-button">2</button>
-                        <button type="button" class="priority-button">3</button>
+            <div class="details">
+                <div class="details-top">
+                    <div class="image-container">
+                        <img id="tree" src="" alt="Tree">
                     </div>
-                    <button type="submit" class="create-edit-button">Create / Edit</button>
-                </form>
-                <div class="timeline">
-                    <h2>Timeline</h2>
-                    <div class="timeline-items">
+
+                        <form id="todo-form">
+                            <h2>Title</h2>
+                            <input class="text-box title-box" type="text" id="title" placeholder="Title">
+                            <div class="priority-container">
+                                <h2>Priority</h2>
+                                <input class="text-box priority-box" type="text" id="priority" placeholder="Priority">
+                            </div>
+                            <h2 class="reminder-h2">Reminder time</h2>
+                            <input class="text-box reminder-box" type="text" id="reminder-time" placeholder="Reminder time">
+                            <div class="btn-box"> <!-- 以下ボタンの集まり -->
+                                <div class="btn-box-left"> <!-- テンプレートボタンとcreate,editボタン -->
+                                    <div class="priority-buttons"> <!-- JSでクリックに応じてテンプレートを添付 -->
+                                        <button type="button" class="priority-button">
+                                            <img class="btn" src="images/icon/btn_1.png">
+                                        </button>
+                                        <button type="button" class="priority-button">
+                                            <img class="btn" src="images/icon/btn_2.png">
+                                        </button>
+                                        <button type="button" class="priority-button">
+                                            <img class="btn" src="images/icon/btn_3.png">
+                                        </button>
+                                    </div>
+                                    <button type="submit" class="create-edit-button"> <!-- JSでクリックに応じてcreate,edit -->
+                                        <img class="btn" src="images/icon/create_edit_btn.png">
+                                    </button>
+                                </div>
+                                <div class="btn-box-right"> <!-- JSでリロード、delete -->
+                                    <div class="reload-container icon-space">
+                                        <a href="#">
+                                            <img class="icon icon-reload" src="images/icon/refresh.png">
+                                        </a>
+                                    </div>
+                                    <div class="trash-container icon-space">
+                                        <a href="#">
+                                            <img class="icon icon-trash" src="images/icon/trash.png">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                </div>
+                <div class="details-bottom">
+                    <div class="timeline">
+                        <h2>Timeline</h2>
+                    <div class="timeline-items"> <!-- JSでDBに応じてtimeline-itemsを追加 -->
                         <!-- Timeline items will be dynamically added here -->
                     </div>
                 </div>
-            </section>
+            </div>
         </main>
     </div>
+    <footer>
+        <p>© 2024 ToDo App. Developed by Team_dev1.</p>
+    </footer>
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
