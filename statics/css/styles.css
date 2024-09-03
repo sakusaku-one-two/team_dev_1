@@ -62,7 +62,6 @@ header {
     content: "";
     position: absolute;
     top: 0;
-    bottom: 0;
     right: 0; /* 右側に配置 */
     bottom: -20px; /* 最初のボーダーから10px下 */
     border-bottom: 4px solid #ffff; /*ボーダー*/
