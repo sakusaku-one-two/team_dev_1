@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+    <html lang="ja">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ToDo App</title>
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+
+    <body>
+        <!-- 統一、再利用したい部分まとめ -->
+            <!-- ボタンなどの押せるもののクラス btn -->
+            <!-- ボーダーラインのクラス border-line -->
+            <!-- アイコンのクラス icon (面倒なのでiconの大きさは全て統一します)-->
+
+            <!-- Text1やタイトル、 日付などはh2で統一 （editコンテナ内のh2にはボーダーラインをcssで引く）-->
+            <!-- 文字入力欄はinputで統一　-->
+
+        <!-- コンテナごとJSに書く必要があるもの （その他細かいJS部分あり）-->
+            <!-- todo-listsコンテナ -->
+            <!-- timelineコンテナ -->
+
+        <div class="outer-frame-container"> <!--画面全体の外枠作成用コンテナ-->
+            <div class="width-container"> <!--全てのコンテンツの横幅を指定するコンテナ-->
+                <header> <!--手書き風文字のロゴと時間表示-->
+                    <div class="header-container">
+                        <div class="header-logo">
+                            <img src="img/logo.png" alt="logo">
+                        </div>
+                        <div class="header-menu-container">
+                            <div class="header-menu-items">
+                                <div class="header-menu-item header-item1"><a href="#"> <!--#の部分は設定画面のリンクに書き直す-->
+                                    <img class="icon btn" src="/Users/kspc/apprentice/dev1_test_1/img/icon/settings.png" alt="設定"> <!--画像の保存場所のパスに書き直す-->
+                                </a></div>
+                                <div class="header-menu-item header-item2">
+                                    <img class="icon" src="/Users/kspc/apprentice/dev1_test_1/img/icon/clock.png" alt="設定"> <!--画像の保存場所のパスに書き直す-->
+                                </div>
+                                <div class="header-menu-item date"> <!-- JSで時間を取得して表示するように修正する -->
+                                    <p class="h2">Aug</p>
+                                    <p class="h2">25,</p>
+                                    <p class="h2">2024</p>
+                                    <p class="h2">Sunday</p>
+                                </div>
+                                <div class="header-menu-item date"> <!-- JSで時間を取得して表示するように修正する。time_〇〇.pngの計４枚 -->
+                                    <img id="day-image" src="" alt="Tree">
+                                </div>
+                            </div>
+                            <div class="border-line" style="width: 100%;"></div> <日付下の二本のボーダーライン>
+                            <div class="border-line" style="width: 30%;"></div>
+                        </div>    
+                    </div>
+                </header>
+                <div class="main-container"> <!--todoリスト、timelineなどを含む全体のコンテナ-->
+                    <div class="todo-container"> <!--左側、todoリストなどのコンテナ-->
+                        <div class="todo-header"> <!-- 検索、sortを表示するコンテナ -->
+                            <input type="text" class="search-box">
+                            <a href="#" class="search-btn"> <!-- JSを使用する検索ボタン。search-boxの入力を受け取り、検索ボタンを押したら検索結果を表示する。 -->
+                                <img class="icon btn" src="/Users/kspc/apprentice/dev1_test_1/img/icon/search.png" alt="sort"> <!-- 画像の保存場所のパスに書き直す -->
+                            </a>
+                            <a href="#" class="sort-btn"> <!-- JSを使用するsortボタン。sortボタンを押したらtodoリストをsortする。 -->
+                                <img class="icon btn" src="/Users/kspc/apprentice/dev1_test_1/img/icon/sort_btn.png" alt="sort"> <!-- 画像の保存場所のパスに書き直す -->
+                            </a>
+                        </div>
+                        <div class="todo-lists  scrollable-content"> <!-- このコンテナ全体をJSに書く必要がある。todoリストのコンテナ。スクロール用クラスも用意。日によってtodo-listコンテナの数が変動する。-->
+                            <div class="todo-list">
+                                <div class="upper-row"> <!-- 星マーク、ラウンド数、日付の表示 -->
+                                    <div class="star-items"> <!-- JSで、各todoのpriorityに合わせた星マークを表示する -->
+                                        <img class="icon" src="/Users/kspc/apprentice/dev1_test_1/img/icon/star_1.png" alt="star"> <!-- 画像の保存場所のパスに書き直す -->
+                                        <img class="icon" src="/Users/kspc/apprentice/dev1_test_1/img/icon/star_0.png" alt="star"> <!-- 画像の保存場所のパスに書き直す -->
+                                        <img class="icon" src="/Users/kspc/apprentice/dev1_test_1/img/icon/star_0.png" alt="star"> <!-- 画像の保存場所のパスに書き直す -->
+                                        <img class="icon" src="/Users/kspc/apprentice/dev1_test_1/img/icon/star_0.png" alt="star"> <!-- 画像の保存場所のパスに書き直す -->
+                                    </div>
+                                    <div class="round">
+                                        <p>ROUND_</p>
+                                        <p>3</p> <!-- JSで、各todoのroundに合わせたラウンド数を表示する -->
+                                    </div>
+                                    <div class="date"> <!-- 前回の学習の日付と今回の学習を日付を記録するテーブルカラムを明確にする必要がありそう。。。 -->
+                                        <div class="prev-date">
+                                            <p>6/25</p> <!-- JSで、各todoのupdated_at？？？を表示する -->
+                                        </div>
+                                        <div class="next-date">
+                                            <p>8/27</p> <!-- JSで、各todoのreminder_date？？？を表示する -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="lower-row"> <!-- todoのタイトル、編集・完了ボタンの表示 -->
+                                    <div class="todo-title"> <!--JSで各todoのタイトルを表示-->
+                                        <h2>text1</h2>
+                                    </div>
+                                    <div class="todo-btn">
+                                        <a href="#" class="edit-btn"> <!-- JSで、editボタンを押された時にtodo情報をeditコンテナに表示するようにする -->
+                                            <img class="icon btn" src="/Users/kspc/apprentice/dev1_test_1/img/icon/edit.png" alt="edit"> <!-- 画像の保存場所のパスに書き直す -->
+                                        </a>
+                                        <a href="#" class="check-box-btn"> <!-- JSで、check-box-btnを押された時にtodoのステータスを完了にする -->
+                                            <img class="icon btn" src="/Users/kspc/apprentice/dev1_test_1/img/icon/check_box.png" alt="done"> <!-- 画像の保存場所のパスに書き直す -->
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="border-line"></div> <!-- todoを区切るボーダーライン -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-container"> <!--右側、tree, edit, timelineのコンテナ-->
+                        <div class="top-right-container"> <!--右上、tree, editのコンテナ-->
+                            <div class="tree-container"> <!--treeのコンテナ-->
+                                <div class="tree-item"> <!-- JSでtreeの画像を変更する -->
+                                    <img src="/Users/kspc/apprentice/dev1_test_1/img/tree/tree_noon_6.png" alt="tree"> <!-- 画像の保存場所のパスに書き直す -->
+                                    <div class="tree-count">
+                                        <p>X</p> 
+                                        <p>25</p><!-- JSでtreeのタイトルを表示する -->
+                                    </div>
+                                    <div class="tree-gauge"></div> <!-- ゲージをJS,CSSで表示 -->>
+                                </div>
+                            </div>
+                            <div class="edit-container"> <!--editのコンテナ-->
+                                <div class="title">
+                                    <h2>Title</h2>
+                                    <input type="text" class="edit-title">
+                                </div>
+                                <div class="priority">
+                                    <h2>Priority</h2>
+                                    <input type="text" class="edit-priority">
+                                </div>
+                                <div class="reminder-time">
+                                    <h2>Reminder Time</h2>
+                                    <input type="text" class="edit-reminder-time">
+                                </div>
+                                <div class="btn-list">
+                                    <div class="btn-list-left"> <!-- テンプレートボタンとcreate,editボタン -->
+                                        <div class="templates-btn-items"> <!-- JSでクリックした時にテンプレートがクラスedit-reminder-time部分に自動入力されるようにする -->
+                                            <a href="#" class="templates_btn_1">
+                                                <img class="btn" src="/Users/kspc/apprentice/dev1_test_1/img/icon/btn_1.png" alt="templates"> <!-- 画像の保存場所のパスに書き直す -->
+                                            </a>
+                                            <a href="#" class="templates_btn_2">
+                                                <img class="btn" src="/Users/kspc/apprentice/dev1_test_1/img/icon/btn_2.png" alt="templates"> <!-- 画像の保存場所のパスに書き直す -->
+                                            </a>
+                                            <a href="#" class="templates_btn_3">
+                                                <img class="btn" src="/Users/kspc/apprentice/dev1_test_1/img/icon/btn_3.png" alt="templates"> <!-- 画像の保存場所のパスに書き直す -->
+                                            </a>
+                                        </div>
+                                        <div class="create-edit-btn">
+                                            <a href="#">
+                                                <img class="btn" src="/Users/kspc/apprentice/dev1_test_1/img/icon/create_edit_btn.png" alt="create"> <!-- 画像の保存場所のパスに書き直す -->
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="btn-list-right"> <!-- リロード、deleteボタン -->
+                                        <a href="#" class="reload-btn">
+                                            <img class="btn" src="/Users/kspc/apprentice/dev1_test_1/img/icon/refresh.png" alt="reload"> <!-- 画像の保存場所のパスに書き直す -->
+                                        </a>
+                                        <a href="#" class="delete-btn">
+                                            <img class="btn" src="/Users/kspc/apprentice/dev1_test_1/img/icon/trash.png" alt="reload"> <!-- 画像の保存場所のパスに書き直す -->
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-container"> <!-- このコンテナ全体をJSに書く必要がある。timelineのコンテナ。タイムラインが3つ未満の場合の表示作成も忘れないように。 -->
+                            <h2>Timeline</h2>
+                            <div class="timeline-items">
+                                <div class="timeline-item timeline-item-1">
+                                    <div class="timeline-date">  <!-- JSで時間を取得して表示するように修正する -->
+                                        <p>8/27</p>
+                                        <p>Tue</p>
+                                    </div>
+                                    <h2>text1</h2> <!-- JSでtodoごとのタイトルを取得して表示するように修正する。ここで表示するのはその日の中で一番priorityが高いものにする。いくつかある場合はtodoのIDが大きいものにする -->
+                                    <div class="timeline-star">
+                                        <img class="icon" src="/Users/kspc/apprentice/dev1_test_1/img/icon/star_1.png" alt="star"> <!-- 画像の保存場所のパスに書き直す -->
+                                        <p>X</p>
+                                        <p>3</p> <!-- JSでその日のpriorityの合計値を取得して表示 -->
+                                    </div>
+                                </div>
+                                <div class="timeline-item timeline-item-2"> <!-- JSで時間を取得して表示するように修正する -->
+                                    <p>8/27</p>
+                                    <p>Tue</p>
+                                    <h2>text1</h2> <!-- JSでtodoごとのタイトルを取得して表示するように修正する。ここで表示するのはその日の中で一番priorityが高いものにする。いくつかある場合はtodoのIDが大きいものにする -->
+                                    <div class="timeline-star">
+                                        <img class="icon" src="/Users/kspc/apprentice/dev1_test_1/img/icon/star_1.png" alt="star"> <!-- 画像の保存場所のパスに書き直す -->
+                                        <p>X</p>
+                                        <p>3</p> <!-- JSでその日のpriorityの合計値を取得して表示 -->
+                                    </div>
+                                </div>
+                                <div class="timeline-item timeline-item-3"> <!-- JSで時間を取得して表示するように修正する -->
+                                    <p>8/27</p>
+                                    <p>Tue</p>
+                                    <h2>text1</h2> <!-- JSでtodoごとのタイトルを取得して表示するように修正する。ここで表示するのはその日の中で一番priorityが高いものにする。いくつかある場合はtodoのIDが大きいものにする -->
+                                    <div class="timeline-star">
+                                        <img class="icon" src="/Users/kspc/apprentice/dev1_test_1/img/icon/star_1.png" alt="star"> <!-- 画像の保存場所のパスに書き直す -->
+                                        <p>X</p>
+                                        <p>3</p> <!-- JSでその日のpriorityの合計値を取得して表示 -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer> <!-- cssで最下部のラインを作成 -->
+                </footer>
+            </div>
+        </div>
+        <script type="module" src="js/main.js"></script>
+        <script type="module" src="js/timeManage/setDayImage.js"></script>
+    </body>
+</html>
