@@ -1,127 +1,253 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #a8d5e2;
+    background-color: #2BD4D4;
     margin: 0;
     padding: 0;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+    border: 10px solid #366F87;
+}
+
+button {
+    cursor: pointer;
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    background-color: #5bc0de;
+    padding: 10px 0;
+    background-color: #2BD4D4;
     color: white;
+}
+
+.header-logo {
+    font-size: 90px;
+    font-weight: bold;
+    margin: 0 5%;
+    letter-spacing: 30px;
+}
+
+.header-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 20%;
+}
+
+@media (max-width: 1670px) {
+    .header-icon {
+        display: flex; /* flexではなく、通常のブロックレベル要素に変更 */
+        flex-direction: row;
+        width: auto; /* 幅を自動調整にリセット */
+        justify-content: normal; /* justify-contentをデフォルトにリセット */
+        align-items: normal; /* align-itemsをデフォルトにリセット */
+    }
 }
 
 .header-right {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    padding-bottom: 2px;
+    border-bottom: 5px solid #ffff;
+    position: relative;
+    width: 50%;
 }
 
-.date {
-    margin-right: 20px;
+.header-right::after { /* 2本目のボーダーの設定 */
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0; /* 右側に配置 */
+    bottom: -20px; /* 最初のボーダーから10px下 */
+    border-bottom: 4px solid #ffff; /*ボーダー*/
+    display: block;
+    width: 40%;
 }
 
+.time-text {
+    font-size: 40px;
+}
+
+@media (max-width: 1275px) {
+    .time-text {
+        font-size: 30px;
+    }
+}
+@media (max-width: 1082px) {
+    .time-text {
+        font-size: 25px;
+    }
+}
+@media (max-width: 925px) {
+    .time-text {
+        font-size: 20px;
+    }
+}
+
+/*
 .settings i {
     margin-left: 10px;
 }
+*/
 
 main {
     display: flex;
     flex: 1;
+    margin-top: 10px;
 }
 
 aside {
-    width: 25%;
-    background-color: #dff0d8;
-    padding: 10px;
-    overflow-y: auto;
+    width: 45%;
+    background-color: #2BD4D4;
+    padding-left: 10px;
 }
 
 .search-bar {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    justify-content: space-between;
+    margin-bottom: 2px;
 }
 
-.search-bar input {
-    flex: 1;
-    padding: 5px;
-    margin-right: 5px;
+.text-box {
+    font-size: 15px;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #0298988b;
+    border-radius: 20px;
+    width: 80%;
+    box-sizing: border-box;
+    height: 50px;
+    color: #494848;
+}
+
+.text-box::placeholder {
+    color: #959595ab; /* 明るいグレー色に設定 */
+}
+
+.search-box {
+    margin-left: 8%;
 }
 
 .search-button, .sort-button {
     padding: 5px;
 }
 
+.sort-btn {
+    height: 50px;
+}
+
 .todo-list {
     display: flex;
     flex-direction: column;
+    overflow-y: scroll; /* 内容がオーバーフローした場合に縦スクロールを表示 */
+    height: 520px;
 }
 
 .details {
-    flex: 1;
-    background-color: #f5f5f5;
-    padding: 10px;
+    background-color: #2BD4D4;
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: #ffff;
+    width: 55%;
+}
+
+.details-top {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 70%
+}
+
+.details-bottom {
+    display: flex;
+    color: #ffff;
+    width: 90%;
+    height: 40%;
 }
 
 .image-container {
-    margin-bottom: 10px;
+    width: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.image-container img {
+    width: 95%; /* コンテナの幅に合わせて画像を拡大/縮小 */
+    height: 95%; /* コンテナの高さに合わせて画像を拡大/縮小 */
+    object-fit: contain; /* 画像のアスペクト比を保ちつつ、コンテナに収める */
 }
 
 form {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    max-width: 300px;
+    width: 55%;
+    padding-left: 2%;
+    padding-right: 2%;
 }
 
-form input {
-    margin-bottom: 10px;
-    padding: 5px;
+form h2 {
+    font-size: 35px;
+    margin: 0;
 }
 
 .priority-buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    width: 100%;
     margin-bottom: 10px;
 }
 
 .priority-button {
-    flex: 1;
-    margin: 0 5px;
-    padding: 5px;
+    border: none;
+    background: none;
+    outline: none;
+    padding: 0;
+    width: auto; /* ボタンの幅を画像に合わせる */
+    height: auto; /* ボタンの高さを画像に合わせる */
+}
+
+.priority-button img {
+    width: 60px; /* 画像の幅を30pxに設定 */
+    height: 40px; /* 画像の高さを30pxに設定 */
 }
 
 .create-edit-button {
-    padding: 10px;
-    background-color: #5bc0de;
-    color: white;
     border: none;
-    cursor: pointer;
+    background: none;
+    outline: none;
+    padding: 0;
+    width: auto; /* ボタンの幅を画像に合わせる */
+    height: auto; /* ボタンの高さを画像に合わせる */
+}
+
+.create-edit-button img {
+    width: 90%; /* 画像の幅を30pxに設定 */
+    height: 25%; /* 画像の高さを30pxに設定 */
 }
 
 .timeline {
     width: 100%;
-    max-width: 300px;
-    margin-top: 20px;
 }
 
 .timeline-items {
     display: flex;
     flex-direction: column;
+    align-items: flex-start; /* 子要素を左寄せにする */
 }
 
+.timeline h2 {
+    text-align: left; /* 念のためにテキストも左寄せに設定 */
+}
 
 .todo-container {
     width: 300px;
@@ -131,29 +257,6 @@ form input {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: #e0f7fa;
-}
-
-.search-bar {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.search-bar input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px;
-}
-
-.search-bar button {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #00796b;
-    color: white;
-    cursor: pointer;
 }
 
 .todo-list {
@@ -175,12 +278,37 @@ form input {
 
 .todo-text {
     display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* 垂直方向にアイテム間に均等なスペースを設ける */
+    color: #ffff;
+    width: 50%;
+}
+
+.todo-text-child {
+    display: flex;
+    flex-direction: row;
     align-items: center;
+}
+
+.todo-title {
+    font-size:25px;
+}
+
+.todo-star {
 }
 
 .todo-actions {
     display: flex;
     align-items: center;
+    justify-content: space-around;
+    color: #ffff;
+}
+
+.todo-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 15px;
 }
 
 .todo-actions span {
@@ -194,6 +322,135 @@ form input {
     margin-right: 5px;
 }
 
+a {
+    display: inline-block; /* インラインブロック要素として表示 */
+    padding: 0; /* パディングを0に設定 */
+    margin: 0; /* マージンを0に設定 */
+    line-height: 0; /* ラインハイトを0に設定して、余分なスペースを排除 */
+    border: none; /* ボーダーがある場合は削除 */
+    background: none; /* 背景を透明に設定 */
+}
+
 .icon {
-    font-size: 16px;
+    width: 60px; 
+    height: 60px; 
+    display: block; /* ブロック要素として表示 */
+    object-fit: cover; /* 画像がコンテナに合わせて切り取られるように設定 */
+}
+
+@media (max-width: 1082px) {
+    .icon {
+        width: 50px; 
+        height: 50px; 
+    }
+}
+@media (max-width: 850px) {
+    .icon {
+        width: 40px; 
+        height: 40px; 
+    }
+}
+
+.icon-space {
+    margin: 10px;
+}
+
+.icon-search {
+    width: 40px;
+    height: 40px;
+}
+
+.icon-star {
+    padding: 1px;
+    width: 30px;
+    height: 30px; 
+    display: inline-block; /* インラインブロック要素として表示 */
+    object-fit: cover; /* 画像がコンテナに合わせて切り取られるように設定 */
+}
+
+@media (max-width: 960px) {
+    .icon-star {
+        width: 20px;
+        height: 20px; 
+    }
+}
+
+.icon-edit {
+    width: 33px;
+    height: 33px;
+    display: inline-block; /* インラインブロック要素として表示 */
+}
+
+.icon-check {
+    width: 30px;
+    height: 30px;
+    display: inline-block; /* インラインブロック要素として表示 */
+}
+
+.icon-reload {
+    width: 40px;
+    height: 40px;
+}
+
+.icon-trash {
+    width: 40px;
+    height: 40px;
+}
+
+.btn-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.btn-box-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn-box-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.priority-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.priority-box {
+    width: 25%;
+}
+
+.title-box {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.reminder-box {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+footer {
+    width: 100%;
+    height: 30px;
+    background-color: #356F87;
+}
+
+footer p {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin: 0;
+    padding-right: 30px;
+    color: #ffff;
+}
+
+.reminder-h2 {
+    margin-top: 10px;
 }
