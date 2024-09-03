@@ -7,10 +7,12 @@ const getPrevAndNext = (reminders) => {
     // filterで個々のリマインダーの状態　0＝＞未完了　1＝＞完了でふるいにかける　そしてmapで残ったリマインダーから日付を取得して　ソートする。
     const prevDates = reminders.filter(reminder => reminder.status === 0).map(reminder => new Date(reminder.reminder_date)).sort((a,b) => a - b);
     const nextDates = reminders.filter(reminder => reminder.status !== 0 ).map(reminder => new Date(reminder.reminder_date)).sort((a,b) => a - b);
-
+    const totalDateNumber = reminders.map(rem => rem.date_number).join(",");
+    console.log(totalDateNumber);
     return {
         prevDate: prevDates.length > 0 ? prevDates[0].toISOString().split('T')[0]:'',
-        nextDate: nextDates.length > 0 ? nextDates[nextDates.length -1 ].toISOString().split('T')[0]: ''
+        nextDate: nextDates.length > 0 ? nextDates[nextDates.length -1 ].toISOString().split('T')[0]: '',
+        totalDateNumbers:totalDateNumber
     };
 
 
@@ -22,7 +24,7 @@ const getPrevAndNext = (reminders) => {
 export default function CreateTodoDom( todo ){
     
     const {id,priority,reminders,title} = todo;
-    const {prevDate,nextDate} = getPrevAndNext(reminders);
+    const {prevDate,nextDate,totalDateNumbers} = getPrevAndNext(reminders);
     const todoItem = document.createElement('li');
     
     todoItem.className = 'todo-item';
@@ -34,11 +36,6 @@ export default function CreateTodoDom( todo ){
 
     const todoText = `
         <div class="todo-text">
-<<<<<<< HEAD
-            <span>${title}</span>
-            <span id="${id}_status">${todo.status}</span>
-            <span>${priorityStars + blankStars}</span>
-=======
             <div class="todo-text-child todo-star">
                 <span>${priorityStars + blankStars}</span>
                 <span>${todo.status}</span>
@@ -46,7 +43,6 @@ export default function CreateTodoDom( todo ){
             <div class="todo-text-child todo-title">
                 <span>${title}</span>
             </div>
->>>>>>> html_css
         </div>
         <div class="todo-actions">
             <div class="todo-action">
@@ -68,7 +64,7 @@ export default function CreateTodoDom( todo ){
     editButton.addEventListener('click',() =>{
         document.getElementById('title').value = title;
         document.getElementById('priority').value = priority;
-        document.getElementById('reminder-time').value = reminders.length;
+        document.getElementById('reminder-time').value = totalDateNumbers;
     });
 
 

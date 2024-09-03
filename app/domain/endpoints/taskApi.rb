@@ -68,7 +68,7 @@ module AutoRooting
         PATH = "/get_tasks"
 
         def GET(query_params)
-            
+            puts ""
         end
     end
 
@@ -122,4 +122,40 @@ module AutoRooting
 
     end
 
+    class TodaySpeach < BaseApi
+        PATH = "/today_speach"
+        def GET(params_dict)
+
+            today = Date.today.to_s
+            sql = <<-SQL
+                SELECT Tasks.*
+                FROM Tasks
+                JOIN Reminders ON Tasks.id = Reminders.task_id
+                WHERE Reminders.reminder_date = ? AND Tasks.status = 0 
+            SQL
+            begin 
+                reuslt = DataQuery.new(sql,[today]).execute.to_a
+
+                speach_txt = to_text(reuslt)
+                return {
+                    text: speach_txt
+                }.to_json
+            rescue StandardError => e 
+                return {text: e.message}.to_json
+            end
+        end
+
+        private
+
+        def to_text(tasks)
+            return_txt = "本日取り組むべきタスクは、"
+            return  return_txt << "ありません" if tasks.count == 0 
+            tasks.map do |row|
+                return_txt << row["title"]
+                return_txt << " "
+            end
+
+            return_txt << "になります。"
+        end
+    end
 end

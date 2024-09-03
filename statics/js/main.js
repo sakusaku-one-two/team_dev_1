@@ -4,6 +4,7 @@ import CreateTask from "./apis/createTask.js";
 import CreateTodoDom from "./todoList/createTodo.js";
 import GetTasks from "./apis/getTasks.js";
 import setTree from "./three/tree.js";
+import TodoSpeach from "./apis/todoSpeach.js";
 
 
 // 画面がロードされたら実行されるコールバック関数（初期化処理を記載）
@@ -12,7 +13,10 @@ document.addEventListener("DOMContentLoaded",async function(){
     void setTree();
 
     const todoForm = document.getElementById('todo-form');
-    
+    const treeDon = document.getElementById("tree");
+    treeDon.addEventListener("click",() =>{
+        void TodoSpeach();
+    })
     
     const todoList = document.querySelector('.todo-List');
     
@@ -27,8 +31,9 @@ document.addEventListener("DOMContentLoaded",async function(){
             const todoList = document.querySelector('.todo-list');
             todoList.appendChild(taskItem);
         });
+
+        
     });
-    
     
     const timelineItems = document.querySelector('.timeLine-items');
 
@@ -52,3 +57,4 @@ document.addEventListener("DOMContentLoaded",async function(){
 
 
 });
+
