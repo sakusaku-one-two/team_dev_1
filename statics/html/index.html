@@ -41,12 +41,29 @@
                         </div>
                         <div class="sort-container icon-space"> <!-- sortボタン -->
                             <button> <!-- JSを使用するsortボタン。sortボタンを押したらtodoリストをsortする。 -->
-                                <img id="sort-button" class="icon-sort dropdown-button" src="/images/icon/sort.png" alt="sort"> <!-- 画像の保存場所のパスに書き直す -->
+                                <img id="sort-button" class="icon-sort dropdown-button" src="/images/icon/sort.png" alt="sort">
                             </button>
-                            <div id="sort-menu" class="dropdown-content" style="display: none;">
-                                <a href="#" data-sort-type="priority">重要度順</a>
-                                <a href="#" data-sort-type="reminder-date">直近のタスク順</a>
-                                <a href="#" data-sort-type="creation-date">作成日順</a>
+                            <div id="sort-menu" class="dropdown-contents" style="display: none;">
+                                <div class="dropdown-content sort-priority">
+                                    <a href="#" data-sort-type="priority" data-order="asc">↑</a>
+                                    <a href="#" data-sort-type="priority" data-order="desc">↓</a>
+                                    <p>重要度順</p>
+                                </div>
+                                <div class="dropdown-content sort-reminder-date">
+                                    <a href="#" data-sort-type="reminder-date" data-order="asc">↑</a>
+                                    <a href="#" data-sort-type="reminder-date" data-order="desc">↓</a>
+                                    <p>直近のタスク順(demo)</p>
+                                </div>
+                                <div class="dropdown-content sort-creation-date">
+                                    <a href="#" data-sort-type="creation-date" data-order="asc">↑</a>
+                                    <a href="#" data-sort-type="creation-date" data-order="desc">↓</a>
+                                    <p>作成日順</p>
+                                </div>
+                                <div class="dropdown-content sort-past-incomplete-task">
+                                    <a href="#" data-sort-type="past-incomplete-task" data-order="asc">↑</a>
+                                    <a href="#" data-sort-type="past-incomplete-task" data-order="desc">↓</a>
+                                    <p>過去の未完了タスク(demo)</p>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -63,8 +63,8 @@ document.addEventListener("DOMContentLoaded",async function(){
 
     // メニュー外をクリックした時にメニューを閉じる
     window.onclick = function(event) {
-        if (!event.target.matches('.dropdown-button') && !event.target.closest('.dropdown-content')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
+        if (!event.target.matches('.dropdown-button') && !event.target.closest('.dropdown-contents')) {
+            var dropdowns = document.getElementsByClassName("dropdown-contents");
             Array.from(dropdowns).forEach(dropdown => {
                 dropdown.style.display = 'none';
             });
@@ -76,12 +76,14 @@ document.addEventListener("DOMContentLoaded",async function(){
         item.addEventListener('click', function(e) {
             e.preventDefault();
             const sortType = this.getAttribute('data-sort-type');
+            const order = this.getAttribute('data-order'); // 正しくオーダー属性を取得
+
             if (sortType === 'priority') {
-                sortTodosByPriority();
+                sortTodosByPriority(order);
             } else if (sortType === 'reminder-date') {
-                sortTodosByReminderDate();
+                sortTodosByReminderDate(order);
             } else if (sortType === 'creation-date') {
-                sortTodosByCreationDate();
+                sortTodosByCreationDate(order);
             }
             document.getElementById('sort-menu').style.display = 'none';
         });

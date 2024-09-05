@@ -1,7 +1,6 @@
 // すべてのタスクを取得する
 const GetTasks = (call_back) => {
-    
-    try {    
+    try {
         fetch('/api/tasks', {
             method: 'GET',
             headers: {
@@ -17,10 +16,9 @@ const GetTasks = (call_back) => {
         }).catch(error => {
             console.log(error);
         });
-       
     } catch(error) {
         console.log(error);
-    }   
+    }
 };
 
 export default GetTasks;
