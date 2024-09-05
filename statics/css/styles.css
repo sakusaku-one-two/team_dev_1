@@ -25,7 +25,7 @@ header {
 .header-logo {
     font-size: 90px;
     font-weight: bold;
-    margin: 0 5%;
+    margin: 0 5% 0 5%;
     letter-spacing: 30px;
 }
 
