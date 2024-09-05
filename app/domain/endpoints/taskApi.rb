@@ -20,6 +20,47 @@ module AutoRooting
                 return {error: e.message}.to_json
             end
         end
+        
+        def POST(query_dict)
+            title = query_dict[:title]
+            reminder_times = query_dict[:reminder_times]
+            priorty = query_dict[:priorty]
+            create_task_sql = "INSERT INTO Tasks (title, priority, status) VALUES(?,?,?)"
+            task_paramas = [title,priority,0]
+
+            
+            begin
+                DataQuery.new(create_task_sql,task_paramas).execute #タスクを作成
+                max_id = DataQuery.new("SELECT MAX(id) FROM Tasks").execute.first[:id].to_i
+                
+                create_reminder_sql = "INSERT INTO Reminders(task_id,reminder_date,status_description,date_number,status) VALUES(?,?,?,?,?)"
+                reminder_dates = reminder_times_to_dates(reminder_times,max_id)#　数値の羅列から日付の配列へ変換　＝＞　リマインダーを作成するための値
+                
+                DataQuery.new(create_reminder_sql,reminder_dates).execute# リマインダーを作成
+                
+                return {
+                    success:true,
+                    id:max_id,
+                }.to_json
+            rescue StandardError => e
+                return {success:false,error:e.message}.to_json
+            end
+        end
+        
+        private
+
+        def reminder_times_to_dates(reminder_times_as_num_array,task_id)#-> [date,date,...]
+            reminder_times_as_num_array.map.with_index do |time_number,index|
+                [
+                    task_id,
+                    Time.now,
+                    "未完了",
+                    index + 1,
+                    0
+                ]
+            end
+        end
+
     end
 
 
@@ -27,7 +68,7 @@ module AutoRooting
         PATH = "/get_tasks"
 
         def GET(query_params)
-            
+            puts ""
         end
     end
 
@@ -59,11 +100,11 @@ module AutoRooting
     class TaskChecked < BaseApi
         PATH = '/task_checked'
         def UPDATE(query_params)
-            id = query_params[:id]
+            id = query_params['id']
             begin
-                DataQuery.new('UPDATE Tasks SET status=1 WHERE id=? VALUES(?)',[id]).execute
+                DataQuery.new('UPDATE Tasks SET status=1 WHERE id=?',[id]).execute
                 return {success:true,id:id}.to_json
-            rescue Error => e
+            rescue StandardError => e
                 return {success: false,error:e.message,id:id}.to_json
             end
         end
@@ -81,4 +122,40 @@ module AutoRooting
 
     end
 
+    class TodaySpeach < BaseApi
+        PATH = "/today_speach"
+        def GET(params_dict)
+
+            today = Date.today.to_s
+            sql = <<-SQL
+                SELECT Tasks.*
+                FROM Tasks
+                JOIN Reminders ON Tasks.id = Reminders.task_id
+                WHERE Reminders.reminder_date = ? AND Tasks.status = 0 
+            SQL
+            begin 
+                reuslt = DataQuery.new(sql,[today]).execute.to_a
+
+                speach_txt = to_text(reuslt)
+                return {
+                    text: speach_txt
+                }.to_json
+            rescue StandardError => e 
+                return {text: e.message}.to_json
+            end
+        end
+
+        private
+
+        def to_text(tasks)
+            return_txt = "本日取り組むべきタスクは、"
+            return  return_txt << "ありません" if tasks.count == 0 
+            tasks.map do |row|
+                return_txt << row["title"]
+                return_txt << " "
+            end
+
+            return_txt << "になります。"
+        end
+    end
 end

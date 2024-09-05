@@ -42,6 +42,6 @@ export default function setTree() {
         const count = JSON.stringify( data.count);
         const treeDom = document.getElementById('tree');
         treeDom.src = `images/tree/tree_${TimeZone()}_${selectTreeNumber[count]}.png` 
-    }).catch (error => alert(error))
+    }).catch (error => console.log(error))
     
 }

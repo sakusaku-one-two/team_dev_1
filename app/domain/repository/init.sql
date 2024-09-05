@@ -57,8 +57,8 @@ INSERT INTO cards(content) VALUES('fourth card');
 
 -- Tasksテーブルに追加のサンプルデータを挿入
 INSERT INTO Reminders (task_id, reminder_date, status_description, date_number, status) VALUES
-(1, '2023-10-01 10:00:00', '未完了', 1, 0),
-(1, '2023-10-02 12:00:00', '完了', 2, 1),
+(1, '2023-9-04 10:00:00', '未完了', 1, 0),
+(1, '2023-9-04 12:00:00', '完了', 2, 1),
 (2, '2023-10-03 14:00:00', '未完了', 3, 0),
 (2, '2023-10-04 16:00:00', '完了', 4, 1),
 (3, '2023-10-05 18:00:00', '未完了', 5, 0),
@@ -97,7 +97,10 @@ CREATE VIEW fetch_tasks_json AS
                     'task_id',Reminders.task_id,
                     'reminder_date',Reminders.reminder_date,
                     'status_description',Reminders.status_description,
-                    'status',Reminders.status
+                    'status',Reminders.status,
+                    'date_number',Reminders.date_number,
+                    'created_at',Reminders.created_at
+
                 )
             )
             FROM Reminders
