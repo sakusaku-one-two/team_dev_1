@@ -7,6 +7,7 @@ import setTree from "./three/tree.js";
 import { setupAllHovers } from './ImageFunction/hover.js'; // hover切り替えモジュール
 import { setupAllClicks } from './ImageFunction/click.js'; // click切り替えモジュール
 import TodoSpeach from "./apis/todoSpeach.js";
+import { sortTodosByPriority } from './todoList/todoList.js'; // ソートモジュール
 
 // 画面がロードされたら実行されるコールバック関数（初期化処理を記載）
 document.addEventListener("DOMContentLoaded",async function(){
@@ -58,6 +59,11 @@ document.addEventListener("DOMContentLoaded",async function(){
 
     });
 
+    // ソートボタンのイベントリスナー
+    document.getElementById('sort-button').addEventListener('click', (event) => {
+        event.preventDefault(); // ページ遷移を防ぐ
+        sortTodosByPriority(); // TODOリストをソート
+    });
 
 });
 

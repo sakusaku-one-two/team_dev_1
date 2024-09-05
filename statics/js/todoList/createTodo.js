@@ -29,6 +29,7 @@ export default function CreateTodoDom( todo ){
     
     todoItem.className = 'todo-item';
     todoItem.id = id;
+    todoItem.dataset.priority = priority; // priority属性を追加
 
     const priorityStars = Array(priority).fill('<img src="images/icon/star_1.png" alt="star" class="todo-icon icon-star">').join('');
     const blankStars = priority < 5 ?  Array(5 - priority).fill('<img src="images/icon/star_0.png" alt="blackStar" class="todo-icon icon-star">').join('') : '' ;
