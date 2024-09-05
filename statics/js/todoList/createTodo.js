@@ -53,8 +53,8 @@ export default function CreateTodoDom( todo ){
                 <p>NEXT</p>
                 <span>${nextDate}</span>
             </div>
-            <button class="edit-button"><img src="images/icon/edit.png" alt="Edit" class="todo-icon icon-edit"></button>
-            <button class="check-button" ><img src="images/icon/check_box.png" alt="Check" class="todo-icon icon-check"></button>
+            <button class="edit-button"><img class="icon-edit" src="images/icon/edit.png" alt="Edit"></button>
+            <button class="check-button" ><img class="icon-check-box" src="images/icon/check_box.png" alt="Check"></button>
         </div>
     `;
 

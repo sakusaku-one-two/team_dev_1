@@ -4,13 +4,16 @@ import CreateTask from "./apis/createTask.js";
 import CreateTodoDom from "./todoList/createTodo.js";
 import GetTasks from "./apis/getTasks.js";
 import setTree from "./three/tree.js";
+import { setupAllHovers } from './ImageFunction/hover.js'; // hover切り替えモジュール
+import { setupAllClicks } from './ImageFunction/click.js'; // click切り替えモジュール
 import TodoSpeach from "./apis/todoSpeach.js";
-
 
 // 画面がロードされたら実行されるコールバック関数（初期化処理を記載）
 document.addEventListener("DOMContentLoaded",async function(){
     void setTimeOfDayImage();//時間帯ごとに画像を変える関数 内部でdomを入れ替えるので返り値はないことを示すvoidを表記
     void setTree();
+    setupAllHovers(); // hover機能を初期化
+    setupAllClicks(); // click機能を初期化
 
     const todoForm = document.getElementById('todo-form');
     const treeDon = document.getElementById("tree");
