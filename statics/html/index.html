@@ -33,15 +33,22 @@
             <aside>
                 <div class="search-bar"> <!-- 検索バー -->
                     <input class="text-box search-box" type="text" placeholder="Search...">
-                    <div class="icon-space"> <!-- 検索ボタン -->
-                        <a href="#"> <!-- JSを使用する検索ボタン。search-boxの入力を受け取り、検索ボタンを押したら検索結果を表示する。 -->
-                            <img class="icon-search" src="images/icon/search.png">
-                        </a>
-                    </div>
-                    <div class="icon-space"> <!-- sortボタン -->
-                        <a href="#" id="sort-button"> <!-- JSを使用するsortボタン。sortボタンを押したらtodoリストをsortする。 -->
-                            <img class="icon-sort" src="/images/icon/sort.png" alt="sort"> <!-- 画像の保存場所のパスに書き直す -->
-                        </a>
+                    <div class="search-btn-container">
+                        <div class="icon-space"> <!-- 検索ボタン -->
+                            <a href="#"> <!-- JSを使用する検索ボタン。search-boxの入力を受け取り、検索ボタンを押したら検索結果を表示する。 -->
+                                <img class="icon-search" src="images/icon/search.png">
+                            </a>
+                        </div>
+                        <div class="sort-container icon-space"> <!-- sortボタン -->
+                            <button> <!-- JSを使用するsortボタン。sortボタンを押したらtodoリストをsortする。 -->
+                                <img id="sort-button" class="icon-sort dropdown-button" src="/images/icon/sort.png" alt="sort"> <!-- 画像の保存場所のパスに書き直す -->
+                            </button>
+                            <div id="sort-menu" class="dropdown-content" style="display: none;">
+                                <a href="#" data-sort-type="priority">重要度順</a>
+                                <a href="#" data-sort-type="reminder-date">直近のタスク順</a>
+                                <a href="#" data-sort-type="creation-date">作成日順</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="todo-list">

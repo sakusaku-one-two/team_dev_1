@@ -11,6 +11,9 @@ body {
 
 button {
     cursor: pointer;
+    border: none;
+    background: none;
+    outline: none;
 }
 
 header {
@@ -27,6 +30,19 @@ header {
     font-weight: bold;
     margin: 0 5% 0 5%;
     letter-spacing: 30px;
+}
+
+@media (max-width: 692px) {
+    .header-logo {
+        font-size: 60px;
+    }
+}
+
+@media (max-width: 610px) {
+    .header-logo {
+        font-size: 50px;
+        margin: 0 2% 0 2%;
+    }
 }
 
 .header-icon {
@@ -113,6 +129,26 @@ aside {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 2px;
+}
+
+@media (max-width: 755px) {
+    .search-bar {
+        flex-direction: column;
+    }
+}
+
+.search-btn-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@media (max-width: 755px) {
+    .search-btn-container .icon-space {
+        margin-bottom: 0;
+        margin-top: 5px;
+    }
 }
 
 .text-box {
@@ -206,23 +242,35 @@ form h2 {
     margin: 0;
 }
 
+@media (max-width: 755px) {
+    form h2 {
+        font-size: 25px;
+    }
+}
+
 .create-edit-button {
     border: none;
     background: none;
     outline: none;
     padding: 0;
-    width: auto; /* ボタンの幅を画像に合わせる */
-    height: auto; /* ボタンの高さを画像に合わせる */
+    width: auto;
+    height: auto;
 }
 
 .create-edit-button img {
-    width: 95%; /* 画像の幅を30pxに設定 */
-    height: 25%; /* 画像の高さを30pxに設定 */
+    width: 95%;
+    height: 25%;
 }
 
 @media (min-width: 1165px) {
     .create-edit-button img {
-        height: 40%; /* 画像の高さを30pxに設定 */
+        height: 40%;
+    }
+}
+
+@media (max-width: 755px) {
+    .create-edit-button img {
+        height: auto;
     }
 }
 
@@ -281,6 +329,18 @@ form h2 {
     font-weight: bold;
 }
 
+@media (max-width: 958px) {
+    .timeline-date {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 755px) {
+    .timeline-date {
+        font-size: 15px;
+    }
+}
+
 .timeline-date p {
     margin: 0;
 }
@@ -314,6 +374,28 @@ form h2 {
 .timeline-star img {
     width: 30px;
     height: 30px;
+}
+
+@media (max-width: 860px) {
+    .timeline-star {
+        font-size: 25px;
+    }
+
+    .timeline-star img {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+@media (max-width: 755px) {
+    .timeline-star {
+        font-size: 20px;
+    }
+
+    .timeline-star img {
+        width: 20px;
+        height: 20px;
+    }
 }
 
 .todo-container {
@@ -364,7 +446,7 @@ form h2 {
 .todo-actions {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     color: #ffff;
     width: 60%;
 }
@@ -375,6 +457,7 @@ form h2 {
     align-items: center;
     font-size: 15px;
     font-weight: bold;
+    width: 40%;
 }
 
 .todo-actions span {
@@ -389,6 +472,17 @@ form h2 {
     border: none;
     cursor: pointer;
     margin-right: 5px;
+}
+
+.todo-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%;
+}
+
+.todo-button {
+    padding-top: 5px;
 }
 
 .margin0 {
@@ -474,6 +568,12 @@ a {
     align-items: center;
 }
 
+@media (max-width: 755px) {
+    .btn-box {
+        flex-direction: column;
+    }
+}
+
 .btn-box-left {
     display: flex;
     flex-direction: column;
@@ -484,6 +584,12 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+@media (max-width: 755px) {
+    .btn-box-right {
+        flex-direction: row;
+    }
 }
 
 .priority-container {
@@ -552,4 +658,36 @@ footer p {
 
 .reminder-h2 {
     margin-top: 10px;
+}
+
+.sort-container {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 49px;
+    left: 10px;
+    background-color: #2BD4D4;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px #4192a4;
+    z-index: 50;
+    border: 3px solid #ffff;
+}
+
+.dropdown-content a {
+    color: #ffff;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid #ffff;
+}
+
+.dropdown-content a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-content a:hover {
+    background-color: #72accd;
 }

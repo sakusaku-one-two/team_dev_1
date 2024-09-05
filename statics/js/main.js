@@ -7,7 +7,7 @@ import setTree from "./three/tree.js";
 import { setupAllHovers } from './ImageFunction/hover.js'; // hover切り替えモジュール
 import { setupAllClicks } from './ImageFunction/click.js'; // click切り替えモジュール
 import TodoSpeach from "./apis/todoSpeach.js";
-import { sortTodosByPriority } from './todoList/todoList.js'; // ソートモジュール
+import { sortTodosByPriority, sortTodosByReminderDate, sortTodosByCreationDate } from './todoList/todoList_sort.js'; // ソートモジュール
 
 // 画面がロードされたら実行されるコールバック関数（初期化処理を記載）
 document.addEventListener("DOMContentLoaded",async function(){
@@ -35,8 +35,6 @@ document.addEventListener("DOMContentLoaded",async function(){
             const todoList = document.querySelector('.todo-list');
             todoList.appendChild(taskItem);
         });
-
-        
     });
     
     const timelineItems = document.querySelector('.timeLine-items');
@@ -53,17 +51,40 @@ document.addEventListener("DOMContentLoaded",async function(){
             todoList.appendChild(
                 CreateTodo(todo)
             ); 
-
         })
-
-
     });
 
     // ソートボタンのイベントリスナー
-    document.getElementById('sort-button').addEventListener('click', (event) => {
-        event.preventDefault(); // ページ遷移を防ぐ
-        sortTodosByPriority(); // TODOリストをソート
+    document.getElementById('sort-button').addEventListener('click', function(event) {
+        event.preventDefault();
+        let sortMenu = document.getElementById('sort-menu');
+        sortMenu.style.display = sortMenu.style.display === 'block' ? 'none' : 'block';
     });
 
+    // メニュー外をクリックした時にメニューを閉じる
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropdown-button') && !event.target.closest('.dropdown-content')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            Array.from(dropdowns).forEach(dropdown => {
+                dropdown.style.display = 'none';
+            });
+        }
+    };
+
+    // ソートオプションのクリックイベント
+    document.querySelectorAll('#sort-menu a').forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const sortType = this.getAttribute('data-sort-type');
+            if (sortType === 'priority') {
+                sortTodosByPriority();
+            } else if (sortType === 'reminder-date') {
+                sortTodosByReminderDate();
+            } else if (sortType === 'creation-date') {
+                sortTodosByCreationDate();
+            }
+            document.getElementById('sort-menu').style.display = 'none';
+        });
+    });
 });
 
