@@ -20,6 +20,19 @@ module AutoRooting
                 return {error: e.message}.to_json
             end
         end
+
+        def DELETE(query_dict)
+            id = query_dict["id"]
+
+            begin 
+                DataQuery.new("DELETE FROM Tasks WHERE id=?",[id]).execute
+                DataQuery.new("DELETE FROM Reminders WHERE task_id = ?",[id]).execute
+                return {success:true}.to_json
+            rescue StandardError => e 
+                return {success:false}.to_json
+            end
+        end
+        
         
         def POST(query_dict)
             title = query_dict[:title]

@@ -65,6 +65,7 @@ export default function CreateTodoDom( todo ){
     
     const editButton = todoItem.querySelector('.edit-button');
     editButton.addEventListener('click',() =>{
+        localStorage.setItem("task_id",id);
         document.getElementById('title').value = title;
         document.getElementById('priority').value = priority;
         document.getElementById('reminder-time').value = totalDateNumbers;
