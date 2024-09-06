@@ -8,6 +8,7 @@ import { setupAllHovers } from './ImageFunction/hover.js'; // hover切り替え�
 import { setupAllClicks } from './ImageFunction/click.js'; // click切り替えモジュール
 import TodoSpeach from "./apis/todoSpeach.js";
 import { sortTodosByPriority, sortTodosByReminderDate, sortTodosByCreationDate } from './todoList/todoList_sort.js'; // ソートモジュール
+import { searchTodos } from './todoList/todoList_search.js'; // 検索モジュール
 
 // 画面がロードされたら実行されるコールバック関数（初期化処理を記載）
 document.addEventListener("DOMContentLoaded",async function(){
@@ -87,6 +88,13 @@ document.addEventListener("DOMContentLoaded",async function(){
             }
             document.getElementById('sort-menu').style.display = 'none';
         });
+    });
+
+    // 検索ボタンのクリックイベント
+    document.querySelector('.search-btn-container a').addEventListener('click', (event) => {
+        event.preventDefault();
+        const searchText = document.querySelector('.search-box').value;
+        searchTodos(searchText);
     });
 });
 
