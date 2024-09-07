@@ -18,9 +18,9 @@ const getData = () =>{
 
     
 
-    const reminders_as_array = reminders?  reminders.split(",") : [] ;
+    const reminders_as_array = reminders?  reminders.split(",").map(str => new Number(str)) : [] ;
 
-    
+    alert(reminders_as_array);
     return {
         title:title,
         priority:priority,
@@ -53,8 +53,9 @@ const PostAndUpdate =  (event) => {
                 console.log("投稿失敗しました。")
             } else {
                 location.reload(true);
-                console.log(
-                    res.success
+                const res_ = res.json();
+                alert(
+                    res_.error
                 );
             }
 
@@ -78,12 +79,12 @@ const PostAndUpdate =  (event) => {
             });
 
             if (!res.ok) {
-                console.log("更新に失敗しました。");
+                alert("更新に失敗しました。");
             } else {
                 
                 const resjson = res.json();
                 alert(
-                    resjson.success
+                    resjson.error
                 );
                 location.reload(true);
             }
