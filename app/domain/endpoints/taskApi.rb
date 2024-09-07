@@ -32,19 +32,40 @@ module AutoRooting
                 return {success:false}.to_json
             end
         end
+
+        def UPDATE(query_dict)
+            id = query_dict["id"]
+            title = query_dict["title"]
+            reminders = query_dict["reminders"]
+            priority = query_dict["priority"]
+
+            sql = "UPDATE Tasks SET title = ?, priority = ? WHERE id = ?"
+            params_array = [title,priority,id]
+
+            begin   
+                DataQuery.new(sql,params_array).execute
+                return {success:true,message:"成功しました"}.to_json
+            rescue StandardError => e 
+                return {
+                    success:false,message:e.message
+                }.to_json
+            end
+        end
         
         
         def POST(query_dict)
-            title = query_dict[:title]
-            reminder_times = query_dict[:reminder_times]
-            priorty = query_dict[:priorty]
+            title = query_dict["title"]
+            reminder_times = query_dict["reminders"]
+            priority = query_dict["priority"]
             create_task_sql = "INSERT INTO Tasks (title, priority, status) VALUES(?,?,?)"
             task_paramas = [title,priority,0]
 
-            
+            puts title
             begin
                 DataQuery.new(create_task_sql,task_paramas).execute #タスクを作成
-                max_id = DataQuery.new("SELECT MAX(id) FROM Tasks").execute.first[:id].to_i
+                result = DataQuery.new("SELECT MAX(id) FROM Tasks").execute.first
+                max_id = result.is_a?(Hash) ? result["id"].to_i : result[0].to_i
+
                 
                 create_reminder_sql = "INSERT INTO Reminders(task_id,reminder_date,status_description,date_number,status) VALUES(?,?,?,?,?)"
                 reminder_dates = reminder_times_to_dates(reminder_times,max_id)#　数値の羅列から日付の配列へ変換　＝＞　リマインダーを作成するための値
@@ -66,9 +87,9 @@ module AutoRooting
             reminder_times_as_num_array.map.with_index do |time_number,index|
                 [
                     task_id,
-                    Time.now,
+                    Time.now + (time_number * 24 * 60 * 60),
                     "未完了",
-                    index + 1,
+                    time_number,
                     0
                 ]
             end
@@ -93,7 +114,7 @@ module AutoRooting
 
                 id = request_data_json[:id]
                 title = request_data_json[:title]
-                description = request_data_json[:description]
+                description = "none"
                 status = request_data_json[:status]
 
                 sql = "UPDATE Tasks SET title = ?,description = ?,status = ? WHERE id = ?"
