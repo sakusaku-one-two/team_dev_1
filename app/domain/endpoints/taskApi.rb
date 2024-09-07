@@ -101,7 +101,7 @@ module AutoRooting
                     task_id,
                     (Time.now + (time_number * 24 * 60 * 60)).strftime('%Y-%m-%d %H:%M:%S'),
                     "未完了",
-                    index + 1,
+                    time_number,
                     0
                 ]
             end
