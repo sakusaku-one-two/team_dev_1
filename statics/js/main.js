@@ -10,6 +10,7 @@ import TodoSpeach from "./apis/todoSpeach.js";
 import { sortTodosByPriority, sortTodosByReminderDate, sortTodosByCreationDate } from './todoList/todoList_sort.js'; // ソートモジュール
 import { searchTodos } from './todoList/todoList_search.js'; // 検索モジュール
 import PostAndUpdate from "./apis/postTodo.Js";
+import DeleteTodo from "./apis/deleteTodo.js";
 
 // 画面がロードされたら実行されるコールバック関数（初期化処理を記載）
 document.addEventListener("DOMContentLoaded",async function(){
@@ -22,6 +23,12 @@ document.addEventListener("DOMContentLoaded",async function(){
     const treeDon = document.getElementById("tree");
     treeDon.addEventListener("click",() =>{
         void TodoSpeach();
+    })
+
+    const trashContainer = document.querySelector('.trash-container.icon-space');
+
+    trashContainer.addEventListener("click",(event)=>{
+        DeleteTodo();
     })
     
     const todoList = document.querySelector('.todo-List');
