@@ -110,6 +110,16 @@ CREATE VIEW fetch_tasks_json AS
     FROM Tasks;
 
 
+CREATE VIEW today_reminders AS
+     SELECT JSON_OBJECT(
+        'title', Tasks.title
+     ) AS today_title
+     FROM Reminders
+     JOIN Tasks ON Reminders.task_id = Tasks.id
+     WHERE DATE(Reminders.reminder_date) = CURDATE();
+
+
+
 CREATE VIEW tree_count AS 
     SELECT
         (SUM(CASE WHEN status !=0 THEN 1 ELSE 0 END) / COUNT(*)) * 10.0 AS tree_count 

@@ -4,19 +4,44 @@ import setTree from "../three/tree.js";
 const getPrevAndNext = (reminders) => {
     if (reminders === null || reminders.length === 0) return {prevDate: '',nextDate:''};
     
-    // filterで個々のリマインダーの状態　0＝＞未完了　1＝＞完了でふるいにかける　そしてmapで残ったリマインダーから日付を取得して　ソートする。
-    const prevDates = reminders.filter(reminder => reminder.status === 0).map(reminder => new Date(reminder.reminder_date)).sort((a,b) => a - b);
-    const nextDates = reminders.filter(reminder => reminder.status !== 0 ).map(reminder => new Date(reminder.reminder_date)).sort((a,b) => a - b);
+    const today = new Date();
+    const closestReminder = reminders.reduce((closest,reminder,index) =>{
+        if (!reminder || !reminder.reminder_date) {
+            console.error(`Invalid reminder at index ${index}:`, reminder);
+            return closest;
+        }
+        const reminderDate = new Date(reminder.reminder_date);
+        const diff = Math.abs(reminderDate - today);
+        if (closest === null || diff < closest.diff) {
+            return {date:reminderDate,index:index,diff:diff};
+        }
+        return closest
+    },null);
+
+    const prevDate = closestReminder ? closestReminder.date.toISOString().split('T')[0] :'';
+    const prevIndex = closestReminder ? closestReminder.index : null;
+
+    const nextDate = (prevIndex !== null && prevIndex +1 < reminders.length ) ? new Date(reminders[prevIndex +1].reminder_date).toISOString().split('T')[0]:'';
+
     const totalDateNumber = reminders.map(rem => rem.date_number).join(",");
     console.log(totalDateNumber);
+
     return {
-        prevDate: prevDates.length > 0 ? prevDates[0].toISOString().split('T')[0]:'',
-        nextDate: nextDates.length > 0 ? nextDates[nextDates.length -1 ].toISOString().split('T')[0]: '',
+        prevDate:prevDate,
+        nextDate:nextDate,
         totalDateNumbers:totalDateNumber
     };
 
+    // return {
+    //     prevDate: prevDates.length > 0 ? prevDates[0].toISOString().split('T')[0]:'',
+    //     nextDate: nextDates.length > 0 ? nextDates[nextDates.length -1 ].toISOString().split('T')[0]: '',
+    //     totalDateNumbers:totalDateNumber
+    // };
+
 
 };
+
+
 
 
 
@@ -39,7 +64,7 @@ export default function CreateTodoDom( todo ){
         <div class="todo-text">
             <div class="todo-text-child todo-star">
                 <span>${priorityStars + blankStars}</span>
-                <span>${todo.status}</span>
+                <span id="${id}_status">${todo.status === 0 ? '未完了':'完了'}</span>
             </div>
             <div class="todo-text-child todo-title">
                 <span>${title}</span>
@@ -82,22 +107,19 @@ export default function CreateTodoDom( todo ){
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({id:id})
-        }).then(res => {
-            const result = res.json();
-            if (!res.ok || !result.success ){
-
-                console.log(result.error);
-            
-            }
-            return result;
-        }).then(data => {
-           
-            const status_dom = document.getElementById(`${id}_status`);
-            status_dom.innerText = 1;
-            setTree();
-        }).catch(error =>{
-            console.log(error.message);
-        }) 
+        }).then(res => res.json())
+          .then(result => {
+              if (!result.success) {
+                  console.log(result.error);
+              } else {
+                  const status_dom = document.getElementById(`${id}_status`);
+                  status_dom.innerText = "完了";
+                  setTree();
+                  
+              }
+          }).catch(error =>{
+              console.log(error.message);
+          }) 
     });
     
     

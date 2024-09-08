@@ -70,7 +70,7 @@ module AutoRooting
         
         def POST(query_dict)
             title = query_dict["title"]
-            reminder_times = query_dict["reminders"]
+            reminders = query_dict["reminders"]
             priority = query_dict["priority"]
             create_task_sql = "INSERT INTO Tasks (title, priority, status) VALUES(?,?,?)"
             task_params = [title, priority, 0]
@@ -81,11 +81,12 @@ module AutoRooting
                 max_id = result.is_a?(Hash) ? result["id"].to_i : result[0].to_i
 
                 create_reminder_sql = "INSERT INTO Reminders(task_id, reminder_date, status_description, date_number, status) VALUES(?,?,?,?,?)"
-                reminder_dates = reminder_times_to_dates(reminder_times, max_id) # 数値の羅列から日付の配列へ変換 => リマインダーを作成するための値
-                
-                reminder_dates.each do |params|
-                    DataQuery.new(create_reminder_sql, params).execute # リマインダーを作成
-                end
+                # reminder_dates = reminder_times_to_dates(reminders, max_id) # 数値の羅列から日付の配列へ変換 => リマインダーを作成するための値
+                reminders_update(eminders, max_id)
+                # reminder_dates.each do |params|
+                #     puts params
+                #     DataQuery.new(create_reminder_sql, params).execute # リマインダーを作成
+                # end
                 
                 return {success: true, id: max_id}.to_json
             rescue StandardError => e
@@ -106,6 +107,24 @@ module AutoRooting
                 ]
             end
         end
+    end
+
+
+    class DeleteTask < BaseApi
+        PATH = "/delete"
+        def POST(query_dict)
+            id = query_dict["id"]
+            begin 
+
+                DataQuery.new("DELETE FROM Reminders WHERE task_id = ?", [id]).execute
+                DataQuery.new("DELETE FROM Tasks WHERE id=?", [id]).execute
+                
+                return {success: true}.to_json
+            rescue StandardError => e 
+                return {success: false,message:e.message}.to_json
+            end
+
+        end 
     end
 
     class GetTasks < BaseApi
@@ -163,18 +182,22 @@ module AutoRooting
     class TodaySpeach < BaseApi
         PATH = "/today_speach"
         def GET(params_dict)
-            today = Date.today.to_s
-            sql = <<-SQL
-                SELECT Tasks.*
-                FROM Tasks
-                JOIN Reminders ON Tasks.id = Reminders.task_id
-                WHERE Reminders.reminder_date = ? AND Tasks.status = 0 
-            SQL
-            begin 
-                result = DataQuery.new(sql, [today]).execute.to_a
+            # start_today = Date.today.strftime('%Y-%m-%d 00:00:00')
+            # done_today = Date.today.strftime('%Y-%m-%d 24:59:59')
+            # # sql = <<-SQL
+            # #     SELECT Tasks.*
+            #     FROM Tasks
+            #     JOIN Reminders ON Tasks.id = Reminders.task_id
+            #     WHERE Reminders.reminder_date BETWEEN ? AND ? AND Tasks.status = 0 
+            # SQL
 
-                speach_txt = to_text(result)
-                return {text: speach_txt}.to_json
+            
+            begin 
+                result = DataQuery.new("SELECT * FROM today_reminders").execute.to_a
+                puts result
+                parsed_result = result.map { |row| JSON.parse(row['today_title']) } # JSONオブジェクトをパースして配列に変換
+                speach_txt = to_text(parsed_result)
+                return {text: speach_txt,result:result}.to_json
             rescue StandardError => e 
                 return {text: e.message}.to_json
             end
@@ -191,6 +214,37 @@ module AutoRooting
             end
 
             return_txt << "になります。"
+        end
+    end
+
+
+    class AllRem < BaseApi
+        PATH = "/rem"
+        def GET(query_dict)
+            sql = <<-SQL
+                SELECT JSON_ARRAYAGG(
+                    JSON_OBJECT(
+                        'id', Reminders.id,
+                        'task_id', Reminders.task_id,
+                        'reminder_date', Reminders.reminder_date,
+                        'status_description', Reminders.status_description,
+                        'status', Reminders.status,
+                        'date_number', Reminders.date_number,
+                        'created_at', Reminders.created_at
+                    )
+                ) AS reminders
+                FROM Reminders
+            SQL
+
+            begin
+                result = DataQuery.new(sql).execute.first # 結果の最初の行を取得
+                reminders_json = result['reminders'] # JSON配列を取得
+                reminders_json.force_encoding('UTF-8') if reminders_json.is_a?(String)
+                parsed = JSON.parse(reminders_json)
+                return parsed.to_json
+            rescue StandardError => e
+                return {error: e.message}.to_json
+            end
         end
     end
 end

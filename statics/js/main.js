@@ -90,5 +90,10 @@ document.addEventListener("DOMContentLoaded",async function(){
         const searchText = document.querySelector('.search-box').value;
         searchTodos(searchText);
     });
+
+    document.querySelector(".icon-btn-1").addEventListener("click",()=>{
+        const reminderTime = document.getElementById("reminder-time");
+        reminderTime.value = "1,2,3,4,5,6,7";
+    });
 });
 

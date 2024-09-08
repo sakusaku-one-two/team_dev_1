@@ -20,7 +20,7 @@ const getData = () =>{
 
     const reminders_as_array = reminders?  reminders.split(",").map(str => new Number(str)) : [] ;
 
-    alert(reminders_as_array);
+    
     return {
         title:title,
         priority:priority,
@@ -35,8 +35,6 @@ const PostAndUpdate =  (event) => {
     
 
     const post = async () => {
-        alert("post");
-
          const data = getData();
          
          try {
@@ -53,10 +51,8 @@ const PostAndUpdate =  (event) => {
                 console.log("投稿失敗しました。")
             } else {
                 location.reload(true);
-                const res_ = res.json();
-                alert(
-                    res_.error
-                );
+                const res_ = await res.json();
+               
             }
 
         }catch(error){
@@ -66,7 +62,7 @@ const PostAndUpdate =  (event) => {
 
 
     const update = async(id) =>{
-        alert("update");
+        
         const data = getData();
         
         try {
@@ -82,10 +78,7 @@ const PostAndUpdate =  (event) => {
                 alert("更新に失敗しました。");
             } else {
                 
-                const resjson = res.json();
-                alert(
-                    resjson.error
-                );
+                const resjson = await res.json();
                 location.reload(true);
             }
             
